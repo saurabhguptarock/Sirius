@@ -1,0 +1,26 @@
+steps:
+  - name: "gcr.io/cloud-builders/gcloud"
+    args:
+      [
+        "kms",
+        "decrypt",
+        "--ciphertext-file=.env.enc",
+        "--plaintext-file=.env.local",
+        "--location=us-central1",
+        "--keyring=sirius",
+        "--key=sirius-key",
+      ]
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["build", "-t", "gcr.io/clense-c12a8/sirius:$COMMIT_SHA", "."]
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "gcr.io/clense-c12a8/sirius:$COMMIT_SHA"]
+  - name: "gcr.io/cloud-builders/gcloud"
+    args:
+      [
+        "run",
+        "deploy",
+        "sirius",
+        "--platform=managed",
+        "--region=us-central1",
+        "--image=gcr.io/clense-c12a8/sirius:$COMMIT_SHA",
+      ]
