@@ -10,4 +10,13 @@ export interface Board {
   lastUpdatedAt: Date;
 }
 
-export interface Tile {}
+export interface Tile {
+  id: string;
+  position: number;
+  title: string;
+  items: Items[];
+}
+
+export interface Items {
+  title: string;
+}
