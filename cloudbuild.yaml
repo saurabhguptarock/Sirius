@@ -11,9 +11,9 @@ steps:
         "--key=sirius-key",
       ]
   - name: "gcr.io/cloud-builders/docker"
-    args: ["build", "-t", "gcr.io/clense-c12a8/sirius:$COMMIT_SHA", "."]
+    args: ["build", "-t", "gcr.io/sirius-ff0ae/sirius:$COMMIT_SHA", "."]
   - name: "gcr.io/cloud-builders/docker"
-    args: ["push", "gcr.io/clense-c12a8/sirius:$COMMIT_SHA"]
+    args: ["push", "gcr.io/sirius-ff0ae/sirius:$COMMIT_SHA"]
   - name: "gcr.io/cloud-builders/gcloud"
     args:
       [
@@ -22,5 +22,5 @@ steps:
         "sirius",
         "--platform=managed",
         "--region=us-central1",
-        "--image=gcr.io/clense-c12a8/sirius:$COMMIT_SHA",
+        "--image=gcr.io/sirius-ff0ae/sirius:$COMMIT_SHA",
       ]
