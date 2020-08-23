@@ -2,7 +2,7 @@ import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
 import firebase from "firebase/app";
-import { User } from "../types";
+import { User, Tile } from "../types";
 import { store } from "react-notifications-component";
 
 class FirebaseAuthService {
@@ -196,6 +196,35 @@ class FirebaseAuthService {
         });
         return null;
       });
+  };
+
+  getTiles = (uid: string): Tile[] => {
+    return [
+      {
+        id: "1",
+        status: "open",
+        title: "Human Interest Form",
+        content: "Fill out human interest distribution form",
+      },
+      {
+        id: "2",
+        status: "open",
+        title: "Purchase present",
+        content: "Get an anniversary gift",
+      },
+      {
+        id: "3",
+        status: "open",
+        title: "Invest in investments",
+        content: "Call the bank to talk about investments",
+      },
+      {
+        id: "4",
+        status: "open",
+        title: "Daily reading",
+        content: "Finish reading Intro to UI/UX",
+      },
+    ];
   };
 
   signOut = () => {

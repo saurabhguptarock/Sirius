@@ -6,3 +6,128 @@
 $family-sans-serif: "Nunito", sans-serif;
 
 @import "../../../node_modules/bulma/bulma.sass";
+
+:root {
+  --primary-color: rgb(62, 100, 255);
+  --complete-color: #27aa80;
+  --text-color: #172b4d;
+  --disabled-color: #fad6d6;
+  --background-color: #f5eaea;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+a {
+  color: unset;
+  text-decoration: unset;
+  cursor: pointer;
+}
+
+p {
+  margin: 10px 0;
+  overflow-wrap: break-word;
+  text-align: left;
+}
+
+label {
+  font-size: 16px;
+  display: block;
+}
+
+button,
+input {
+  padding: 4px;
+  border: 1px solid var(--disabled-color);
+}
+
+button {
+  outline: none;
+  background: transparent;
+  border-radius: 5px;
+  color: var(--primary-color);
+  transition: all ease 0.8s;
+  cursor: pointer;
+}
+
+button.active {
+  color: var(--primary-color);
+}
+
+button.active:after {
+  content: "";
+  display: block;
+  margin: 0 auto;
+  width: 50%;
+  padding-top: 4px;
+  border-bottom: 1px solid var(--primary-color);
+}
+
+input:focus {
+  outline: none;
+}
+
+select {
+  outline: none;
+  height: 40px;
+}
+
+.item {
+  font-size: 15px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 1;
+  background-color: white;
+}
+
+.item:hover {
+  cursor: pointer;
+}
+
+.item-title {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.item-status {
+  text-align: right;
+}
+
+.color-bar {
+  width: 40px;
+  height: 10px;
+  border-radius: 5px;
+}
+
+.drop-wrapper {
+  flex: 1 25%;
+  width: 100%;
+  height: 100%;
+}
+
+.col-wrapper {
+  margin: 20px;
+  padding: 20px;
+  background-color: #ebecf0;
+  border-radius: 5px;
+}
+
+.col-header {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  margin-top: 0;
+}
+
+.col {
+  min-height: 100px;
+  max-width: 250px;
+  width: 250px;
+}
+
+.highlight-region {
+  background-color: #e2e4ea;
+}
