@@ -2,7 +2,7 @@ import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
 import firebase from "firebase/app";
-import { User, Tile } from "../types";
+import { User, Board } from "../types";
 import { store } from "react-notifications-component";
 
 class FirebaseAuthService {
@@ -198,33 +198,30 @@ class FirebaseAuthService {
       });
   };
 
-  getTiles = (uid: string): Tile[] => {
-    return [
-      {
-        id: "1",
-        status: "open",
-        title: "Human Interest Form",
-        content: "Fill out human interest distribution form",
-      },
-      {
-        id: "2",
-        status: "open",
-        title: "Purchase present",
-        content: "Get an anniversary gift",
-      },
-      {
-        id: "3",
-        status: "open",
-        title: "Invest in investments",
-        content: "Call the bank to talk about investments",
-      },
-      {
-        id: "4",
-        status: "open",
-        title: "Daily reading",
-        content: "Finish reading Intro to UI/UX",
-      },
-    ];
+  getBoards = async (uid: string): Promise<Board[]> => {
+    return this.firestore
+      .collection(`users/${uid}/boards`)
+      .orderBy("lastUpdatedAt", "desc")
+      .get()
+      .then((boards) => {
+        return boards.docs.map((board) => board.data());
+      })
+      .catch((e) => {
+        store.addNotification({
+          title: "Some error occurred",
+          message: e.message,
+          type: "danger",
+          insert: "top",
+          animationIn: ["animated", "fadeIn"],
+          animationOut: ["animated", "fadeOut"],
+          container: "top-right",
+          dismiss: {
+            duration: 5000,
+            click: false,
+          },
+        });
+        return null;
+      });
   };
 
   signOut = () => {

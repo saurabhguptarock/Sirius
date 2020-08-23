@@ -3,11 +3,12 @@ export interface User {
   uid: string;
   email: string;
 }
-export interface Tile {
+export interface Board {
   id: string;
-  status: string;
-  title: string;
-  content: string;
+  name: string;
+  owner: string;
+  createdAt: Date;
+  lastUpdatedAt: Date;
 }
 
 export const ITEM_TYPE = "ITEM";
