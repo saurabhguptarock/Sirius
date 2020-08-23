@@ -6,7 +6,6 @@ const Footer = dynamic(() => import("../Footer"));
 
 const MainLayout = ({ children }) => (
   <div className="container">
-    <ReactNotification />
     <Header />
     {children}
     <Footer />
