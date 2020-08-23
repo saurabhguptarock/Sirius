@@ -1,9 +1,11 @@
 import Head from "next/head";
 import React, { useState, useEffect } from "react";
-import { statuses, Board } from "../types";
+import { Board } from "../types";
+import { connect } from "react-redux";
+import { login } from "../store/actions/AuthAction";
 import FirebaseService from "../services";
 
-export default function Home() {
+const Home = (props) => {
   const [boards, setBoards] = useState<Board[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -23,8 +25,10 @@ export default function Home() {
   };
 
   useEffect(() => {
-    getBoards("IKw76VolUZSsLc9sfMvyc8oIr9X2");
-  }, []);
+    if (props.user) {
+      getBoards(props.user.uid);
+    }
+  }, [props.user]);
 
   return (
     <div>
@@ -33,4 +37,10 @@ export default function Home() {
       </Head>
     </div>
   );
-}
+};
+
+const mapStateToProps = (state) => {
+  return { user: state.auth.user };
+};
+
+export default connect(mapStateToProps, { login })(Home);

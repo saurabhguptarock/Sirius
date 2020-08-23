@@ -4,9 +4,8 @@ export interface User {
   email: string;
 }
 export interface Board {
-  id: string;
+  boardId: string;
   name: string;
-  owner: string;
   createdAt: Date;
   lastUpdatedAt: Date;
 }
