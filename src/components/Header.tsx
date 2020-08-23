@@ -13,7 +13,11 @@ const Header = (props) => {
   }, []);
 
   return (
-    <nav className="navbar" role="navigation" aria-label="main navigation">
+    <nav
+      className="navbar is-transparent"
+      role="navigation"
+      aria-label="main navigation"
+    >
       <div className="navbar-brand">
         <Link href="/">
           <a className="navbar-item">
@@ -41,10 +45,10 @@ const Header = (props) => {
       <div id="navbarBasicExample" className="navbar-menu">
         <div className="navbar-start">
           <Link href="/add-products">
-            <a className="navbar-item"> Add Products</a>
+            <a className="navbar-item main">Add Products</a>
           </Link>
           <Link href="/orders">
-            <a className="navbar-item">Orders</a>
+            <a className="navbar-item main">Orders</a>
           </Link>
         </div>
 

@@ -2,7 +2,7 @@ import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
 import firebase from "firebase/app";
-import { User, Board } from "../types";
+import { User, Board, Tile } from "../types";
 import { store } from "react-notifications-component";
 
 class FirebaseAuthService {
@@ -205,6 +205,32 @@ class FirebaseAuthService {
       .get()
       .then((boards) => {
         return boards.docs.map((board) => board.data());
+      })
+      .catch((e) => {
+        store.addNotification({
+          title: "Some error occurred",
+          message: e.message,
+          type: "danger",
+          insert: "top",
+          animationIn: ["animated", "fadeIn"],
+          animationOut: ["animated", "fadeOut"],
+          container: "top-right",
+          dismiss: {
+            duration: 5000,
+            click: false,
+          },
+        });
+        return null;
+      });
+  };
+
+  getTiles = async (uid: string, boardId: string): Promise<Tile[]> => {
+    return this.firestore
+      .collection(`users/${uid}/boards/${boardId}/tiles`)
+      .orderBy("position")
+      .get()
+      .then((tiles) => {
+        return tiles.docs.map((tile) => tile.data());
       })
       .catch((e) => {
         store.addNotification({
