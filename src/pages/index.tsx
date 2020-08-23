@@ -2,9 +2,9 @@ import Head from "next/head";
 import React, { useState, useEffect } from "react";
 import { Board } from "../types";
 import { connect } from "react-redux";
-import { login } from "../store/actions/AuthAction";
 import FirebaseService from "../services";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const Home = (props) => {
   const [boards, setBoards] = useState<Board[]>([]);
@@ -40,35 +40,43 @@ const Home = (props) => {
       <Head>
         <title>Boards | Sirius </title>
       </Head>
-      <div className="columns mt-5">
-        {!loading &&
-          boards.length > 0 &&
-          boards.map((board) => {
-            return (
-              <div className="column is-3" key={board.boardId}>
-                <Link href="/boards/[id]" as={`/boards/${board.boardId}`}>
-                  <a>
-                    <div className="card" style={{ borderRadius: "5px" }}>
-                      <div className="card-image">
-                        <figure className="image is-4by3">
-                          <img
-                            src="https://bulma.io/images/placeholders/1280x960.png"
-                            style={{ borderRadius: "5px 5px 0 0" }}
-                            alt="Placeholder image"
-                          />
-                        </figure>
-                      </div>
-                      <div className="card-content">
-                        <div className="media-content">
-                          <p className="title is-4">{board.name}</p>
+      <div className="container is-fluid">
+        <div className="columns mt-5">
+          {!loading &&
+            boards.length > 0 &&
+            boards.map((board) => {
+              return (
+                <div className="column is-3" key={board.boardId}>
+                  <Link href="/boards/[id]" as={`/boards/${board.boardId}`}>
+                    <a>
+                      <div className="card" style={{ borderRadius: "5px" }}>
+                        <div className="card-image">
+                          <figure
+                            className="image is-16by9"
+                            style={{ position: "relative" }}
+                          >
+                            <img
+                              src="/assets/images/background.jpg"
+                              style={{ borderRadius: "5px" }}
+                              alt="Placeholder image"
+                            />
+                          </figure>
+                          <div
+                            className="media-content"
+                            style={{ position: "absolute", top: 10, left: 10 }}
+                          >
+                            <p className="title is-4 has-text-white">
+                              {board.name}
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </a>
-                </Link>
-              </div>
-            );
-          })}
+                    </a>
+                  </Link>
+                </div>
+              );
+            })}
+        </div>
       </div>
     </div>
   );

@@ -4,6 +4,9 @@ import FirebaseService from "../../services";
 import { connect } from "react-redux";
 import { Tile } from "../../types";
 import Head from "next/head";
+import SiriusList from "../../components/SiriusList";
+import { DragDropContext } from "react-beautiful-dnd";
+import SiriusActionButton from "../../components/SiriusActionButton";
 
 const Board = (props) => {
   const router = useRouter();
@@ -39,37 +42,30 @@ const Board = (props) => {
     }
   }, [props.user]);
 
+  const onDragEnd = () => {
+    // TODO: implement
+  };
+
   return (
     <div>
       <Head>
         <title>Create Next App</title>
       </Head>
-      <div className="columns mt-5">
-        {!loading &&
-          tiles.length > 0 &&
-          tiles.map((tile) => {
-            return (
-              <div className="column is-3" key={tile.id}>
-                <div className="card" style={{ borderRadius: "5px" }}>
-                  <div className="card-image">
-                    <figure className="image is-4by3">
-                      <img
-                        src="https://bulma.io/images/placeholders/1280x960.png"
-                        style={{ borderRadius: "5px 5px 0 0" }}
-                        alt="Placeholder image"
-                      />
-                    </figure>
-                  </div>
-                  <div className="card-content">
-                    <div className="media-content">
-                      <p className="title is-4">{tile.title}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-      </div>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <div className="columns mt-5">
+          {!loading &&
+            tiles.length > 0 &&
+            tiles.map((tile) => (
+              <SiriusList
+                key={tile.id}
+                title={tile.title}
+                tileId={tile.id}
+                cards={tile.items}
+              />
+            ))}
+          <SiriusActionButton list={true} />
+        </div>
+      </DragDropContext>
     </div>
   );
 };
