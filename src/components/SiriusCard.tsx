@@ -14,12 +14,12 @@ const SiriusCard = (props: Props) => {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
+          className="mb-3"
         >
           <div
             className="card"
             style={{
               borderRadius: "5px",
-              marginBottom: "8px",
             }}
           >
             <div className="card-content">

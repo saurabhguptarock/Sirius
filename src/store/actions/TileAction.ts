@@ -109,7 +109,6 @@ export const sortTile = (
   droppableIdEnd,
   droppableIndexStart,
   droppableIndexEnd,
-  draggableId,
   type
 ) => {
   return {
@@ -119,7 +118,6 @@ export const sortTile = (
       droppableIdEnd,
       droppableIndexStart,
       droppableIndexEnd,
-      draggableId,
       type,
     },
   };

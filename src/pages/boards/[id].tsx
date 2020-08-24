@@ -49,20 +49,25 @@ const Board = (props: Props) => {
   }, [props.user]);
 
   const onDragEnd = (result: DropResult) => {
-    // const { destination, source, draggableId, type } = result;
-    // if (!destination) {
-    //   return;
-    // }
-    // props.dispatch(
-    //   sortTile(
-    //     source.droppableId,
-    //     destination.droppableId,
-    //     source.index,
-    //     destination.index,
-    //     draggableId,
-    //     type
-    //   )
-    // );
+    const { destination, source, type } = result;
+    if (!destination) {
+      return;
+    }
+    console.log({
+      sourceDroppableId: source.droppableId,
+      destinationDroppableId: destination.droppableId,
+      sourceIndex: source.index,
+      destinationIndex: destination.index,
+    });
+    props.dispatch(
+      sortTile(
+        source.droppableId,
+        destination.droppableId,
+        source.index,
+        destination.index,
+        type
+      )
+    );
   };
 
   return (
