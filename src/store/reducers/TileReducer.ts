@@ -65,14 +65,33 @@ const TileReducer = (state = initialState, action) => {
         droppableIndexEnd,
         type,
       } = action.payload;
-      const newState = [...state];
+      let newState = [...state];
 
       // Dragging tiles
       if (type === "tile") {
         const tiles = newState.splice(droppableIndexStart, 1)[0];
         newState.splice(droppableIndexEnd, 0, tiles);
-        // TODO: update the card id of all tiles -> cards
-        return newState;
+        let newTiles: Tile[] = [];
+
+        for (let i = 0; i < newState.length; i++) {
+          const tile = newState[i];
+          let items = [];
+          for (let j = 0; j < tile.items.length; j++) {
+            const item = tile.items[j];
+            items.push({
+              cardId: `card-${i}-${j}`,
+              title: item.title,
+            });
+          }
+          newTiles.push({
+            id: tile.id,
+            items,
+            position: i,
+            title: tile.title,
+          });
+        }
+
+        return newTiles;
       }
 
       // In same Tile
