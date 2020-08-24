@@ -71,6 +71,7 @@ const TileReducer = (state = initialState, action) => {
       if (type === "tile") {
         const tiles = newState.splice(droppableIndexStart, 1)[0];
         newState.splice(droppableIndexEnd, 0, tiles);
+        // TODO: update the card id of all tiles -> cards
         return newState;
       }
 
