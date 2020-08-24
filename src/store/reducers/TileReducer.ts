@@ -80,37 +80,26 @@ const TileReducer = (state = initialState, action) => {
       // In same Tile
       if (droppableIdStart === droppableIdEnd) {
         const tile = state.find((tile) => droppableIdStart === tile.id);
-        let items = tile.items.splice(droppableIndexStart, 1);
-        tile.items.splice(droppableIndexEnd, 0, ...items);
-        // items = tile.items.filter((items) => {
-        //   items.cardId = `card-${tile.position}-`;
-
-        //   const newArray = [];
-
-        //   return newArray;
-        // });
-        const newTile: Tile = {
-          id: tile.id,
-          items,
-          position: tile.position,
-          title: tile.title,
-        };
-        const tmpState = state.splice(droppableIdStart, 1);
-
-        return [...state, newTile];
+        const item = tile.items.splice(droppableIndexStart, 1)[0];
+        tile.items.splice(droppableIndexEnd, 0, item);
+        newState.splice(tile.position, 1, tile);
+        return newState;
       }
 
       // In other Tile
       else if (droppableIdStart !== droppableIdEnd) {
         const tileStart = state.find((tile) => droppableIdStart === tile.id);
-        const items = tileStart.items.splice(droppableIndexStart, 1);
+        const item = tileStart.items.splice(droppableIndexStart, 1)[0];
         const tileEnd = state.find((tile) => droppableIdEnd === tile.id);
-        tileEnd.items.splice(droppableIndexEnd, 0, ...items);
-        return {
-          ...state,
-          [droppableIdStart]: tileStart,
-          [droppableIdEnd]: tileEnd,
-        };
+        tileEnd.items.splice(droppableIndexEnd, 0, item);
+
+        if (tileStart.position > tileEnd.position) {
+          newState.splice(tileEnd.position, 2, tileEnd, tileStart);
+        } else {
+          newState.splice(tileStart.position, 2, tileStart, tileEnd);
+        }
+
+        return newState;
       } else return newState;
     }
 
