@@ -99,6 +99,25 @@ const TileReducer = (state = initialState, action) => {
         const tileEnd = state.find((tile) => droppableIdEnd === tile.id);
         tileEnd.items.splice(droppableIndexEnd, 0, item);
 
+        let tileStartItems = [];
+        let tileEndItems = [];
+        for (let i = 0; i < tileStart.items.length; i++) {
+          const item = tileStart.items[i];
+          tileStartItems.push({
+            cardId: `card-${tileStart.position}-${i}`,
+            title: item.title,
+          });
+        }
+        for (let i = 0; i < tileEnd.items.length; i++) {
+          const item = tileEnd.items[i];
+          tileEndItems.push({
+            cardId: `card-${tileEnd.position}-${i}`,
+            title: item.title,
+          });
+        }
+        tileStart.items = tileStartItems;
+        tileEnd.items = tileEndItems;
+
         if (tileStart.position > tileEnd.position) {
           newState.splice(tileEnd.position, 2, tileEnd, tileStart);
         } else {
