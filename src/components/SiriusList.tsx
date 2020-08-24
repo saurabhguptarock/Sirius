@@ -13,6 +13,8 @@ const SiriusList = (props: Props) => {
     <Droppable droppableId={props.tile.id}>
       {(provided) => (
         <div
+          ref={provided.innerRef}
+          {...provided.droppableProps}
           style={{
             padding: "8px",
             width: "300px",
@@ -21,8 +23,6 @@ const SiriusList = (props: Props) => {
             height: "100%",
             marginRight: "8px",
           }}
-          {...provided.droppableProps}
-          ref={provided.innerRef}
         >
           <h4 style={{ fontSize: "1.5rem", fontWeight: 600 }}>
             {props.tile.title}
@@ -30,6 +30,7 @@ const SiriusList = (props: Props) => {
           {props.tile.items.map((item) => (
             <SiriusCard key={item.cardId} item={item} />
           ))}
+          {provided.placeholder}
           <SiriusActionButton
             isList={false}
             tileProps={props.tile}
@@ -39,7 +40,6 @@ const SiriusList = (props: Props) => {
             // noOfCards={cards.length}
             // tilePosition={tilePosition}
           />
-          {provided.placeholder}
         </div>
       )}
     </Droppable>

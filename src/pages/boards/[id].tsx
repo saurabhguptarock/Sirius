@@ -48,27 +48,21 @@ const Board = (props: Props) => {
     }
   }, [props.user]);
 
-  useEffect(() => {
-    console.log(props.tiles);
-  }, [props.tiles]);
-
   const onDragEnd = (result: DropResult) => {
-    const { destination, source, draggableId, type } = result;
-
-    if (!destination) {
-      return;
-    }
-
-    props.dispatch(
-      sortTile(
-        source.droppableId,
-        destination.droppableId,
-        source.index,
-        destination.index,
-        draggableId,
-        type
-      )
-    );
+    // const { destination, source, draggableId, type } = result;
+    // if (!destination) {
+    //   return;
+    // }
+    // props.dispatch(
+    //   sortTile(
+    //     source.droppableId,
+    //     destination.droppableId,
+    //     source.index,
+    //     destination.index,
+    //     draggableId,
+    //     type
+    //   )
+    // );
   };
 
   return (
@@ -77,23 +71,14 @@ const Board = (props: Props) => {
         <title>Create Next App</title>
       </Head>
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="all-tiles" direction="horizontal" type="tile">
-          {(provided) => (
-            <div
-              className="columns mt-5"
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-            >
-              {!loading &&
-                props.tiles.length > 0 &&
-                props.tiles.map((tile: Tile) => (
-                  <SiriusList key={tile.id} tile={tile} />
-                ))}
-              {provided.placeholder}
-              <SiriusActionButton isList={true} />
-            </div>
-          )}
-        </Droppable>
+        <div className="columns mt-5">
+          {!loading &&
+            props.tiles.length > 0 &&
+            props.tiles.map((tile: Tile) => (
+              <SiriusList key={tile.id} tile={tile} />
+            ))}
+          <SiriusActionButton isList={true} />
+        </div>
       </DragDropContext>
     </div>
   );

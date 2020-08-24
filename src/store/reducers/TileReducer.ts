@@ -2,7 +2,6 @@ import { ADD_CARD, ADD_TILE, DRAG_END, ADD_BOARD } from "../actions/TileAction";
 import { Tile, Item } from "../../types";
 
 let tilePosition = 2;
-let cardPosition = 2;
 
 const initialState: Tile[] = [
   {
@@ -25,7 +24,6 @@ const initialState: Tile[] = [
 ];
 
 const TileReducer = (state = initialState, action) => {
-  console.log(action.type);
   switch (action.type) {
     case ADD_BOARD: {
       const tiles: Tile[] = action.tiles;
@@ -46,10 +44,9 @@ const TileReducer = (state = initialState, action) => {
     case ADD_CARD: {
       const newCard: Item = {
         title: action.payload.title,
-        position: cardPosition,
-        cardId: `card-${tilePosition}-${cardPosition}`,
+        position: action.payload.cardPosition,
+        cardId: `card-${tilePosition}-${action.payload.cardPosition}`,
       };
-      cardPosition += 1;
       const newState = state.map((tile) => {
         if (tile.id === action.payload.tileId) {
           return {

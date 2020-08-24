@@ -13,8 +13,6 @@ interface Props {
 }
 
 const SiriusActionButton = (props: Props) => {
-  console.log(props.tileProps);
-
   const [formOpen, setFormOpen] = useState(false);
   const [text, setText] = useState("");
 
@@ -31,7 +29,7 @@ const SiriusActionButton = (props: Props) => {
   const handleAddCard = () => {
     if (text) {
       props.dispatch(
-        addCard(props.tileProps.id, text, props.tileProps.position)
+        addCard(props.tileProps.id, text, props.tileProps.items.length)
       );
       setText("");
     }
