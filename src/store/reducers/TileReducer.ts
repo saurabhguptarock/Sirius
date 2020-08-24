@@ -1,7 +1,27 @@
 import { ADD_CARD, ADD_TILE, DRAG_END, ADD_BOARD } from "../actions/TileAction";
 import { Tile } from "../../types";
 
-const initialState = [];
+let listPosition = 2;
+
+const initialState: Tile[] = [
+  {
+    id: "sd3fa90po234sdf89sdf7sfu8afa2",
+    title: "Last Episode",
+    position: 0,
+    items: [
+      { cardId: "card-0-0", position: 0, title: "we created a static list" },
+    ],
+  },
+  {
+    id: "sd3fa90po23df89sfa4ds654sad654u8afa2",
+    title: "This Episode",
+    position: 1,
+    items: [
+      { cardId: "card-1-0", position: 0, title: "I am best coder" },
+      { cardId: "card-1-1", position: 1, title: "What is your name and game" },
+    ],
+  },
+];
 
 const TileReducer = (state = initialState, action) => {
   console.log(action.type);
@@ -15,9 +35,10 @@ const TileReducer = (state = initialState, action) => {
       const newList = {
         title: action.payload.title,
         id: action.payload.id,
-        position: action.payload.position,
+        position: listPosition,
         items: [],
       };
+      listPosition += 1;
       return [...state, newList];
     }
 

@@ -1,9 +1,14 @@
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
+import { Item } from "../types";
 
-const SiriusCard = ({ content, id, idx }) => {
+interface Props {
+  item: Item;
+}
+
+const SiriusCard = (props: Props) => {
   return (
-    <Draggable draggableId={id} index={idx}>
+    <Draggable draggableId={props.item.cardId} index={props.item.position}>
       {(provided) => (
         <div
           ref={provided.innerRef}
@@ -20,7 +25,7 @@ const SiriusCard = ({ content, id, idx }) => {
             }}
           >
             <div className="card-content">
-              <p>{content}</p>
+              <p>{props.item.title}</p>
             </div>
           </div>
         </div>

@@ -16,53 +16,49 @@ export const addBoardToStore = (tiles: Tile[]) => {
     };
 };
 
-export const addTile = (
-  userId: string,
-  boardId: string,
-  title: string,
-  tileId: number
-) => async (dispatch) => {
-  console.log({
-    userId,
-    boardId,
-    title,
-    tileId,
+export const addTile = (title: string) => async (dispatch) => {
+  // await FirebaseService.firestore
+  //   .doc(`users/${userId}/boards/${boardId}/tiles/${tileId}`)
+  //   .set(
+  //     {
+  //       id: String(tileId),
+  //       title,
+  //       items: [],
+  //     },
+  //     { merge: false }
+  //   )
+  //   .then((data) =>
+  //     dispatch({
+  //       type: ADD_TILE,
+  //       payload: {
+  //         id: tileId,
+  //         title,
+  //       },
+  //     })
+  //   )
+  //   .catch((e) => {
+  //     store.addNotification({
+  //       title: "Some error occurred",
+  //       message: e.message,
+  //       type: "danger",
+  //       insert: "top",
+  //       animationIn: ["animated", "fadeIn"],
+  //       animationOut: ["animated", "fadeOut"],
+  //       container: "top-right",
+  //       dismiss: {
+  //         duration: 5000,
+  //         click: false,
+  //       },
+  //     });
+  //     return;
+  //   });
+  return dispatch({
+    type: ADD_TILE,
+    payload: {
+      id: "sd3fa90po23df89sfa4ds65454u8afa2",
+      title,
+    },
   });
-  await FirebaseService.firestore
-    .doc(`users/${userId}/boards/${boardId}/tiles/${tileId}`)
-    .set(
-      {
-        id: String(tileId),
-        title,
-        items: [],
-      },
-      { merge: false }
-    )
-    .then((data) =>
-      dispatch({
-        type: ADD_TILE,
-        payload: {
-          id: tileId,
-          title,
-        },
-      })
-    )
-    .catch((e) => {
-      store.addNotification({
-        title: "Some error occurred",
-        message: e.message,
-        type: "danger",
-        insert: "top",
-        animationIn: ["animated", "fadeIn"],
-        animationOut: ["animated", "fadeOut"],
-        container: "top-right",
-        dismiss: {
-          duration: 5000,
-          click: false,
-        },
-      });
-      return;
-    });
 };
 
 export const addCard = (
@@ -74,7 +70,7 @@ export const addCard = (
   tilePosition: number
 ) => async (dispatch) => {
   // TODO : Revert changes in store if update fails
-  dispatch({
+  return dispatch({
     type: ADD_CARD,
     payload: {
       tileId,
@@ -83,32 +79,32 @@ export const addCard = (
       title,
     },
   });
-  await FirebaseService.firestore
-    .doc(`users/${userId}/boards/${boardId}/tiles/${tileId}`)
-    .update({
-      items: firebase.firestore.FieldValue.arrayUnion({
-        cardId: `card-${tilePosition}-${cardPosition}`,
-        title,
-        position: cardPosition,
-      }),
-    })
-    .then(() => {})
-    .catch((e) => {
-      store.addNotification({
-        title: "Some error occurred",
-        message: e.message,
-        type: "danger",
-        insert: "top",
-        animationIn: ["animated", "fadeIn"],
-        animationOut: ["animated", "fadeOut"],
-        container: "top-right",
-        dismiss: {
-          duration: 5000,
-          click: false,
-        },
-      });
-      return;
-    });
+  // await FirebaseService.firestore
+  //   .doc(`users/${userId}/boards/${boardId}/tiles/${tileId}`)
+  //   .update({
+  //     items: firebase.firestore.FieldValue.arrayUnion({
+  //       cardId: `card-${tilePosition}-${cardPosition}`,
+  //       title,
+  //       position: cardPosition,
+  //     }),
+  //   })
+  //   .then(() => {})
+  //   .catch((e) => {
+  //     store.addNotification({
+  //       title: "Some error occurred",
+  //       message: e.message,
+  //       type: "danger",
+  //       insert: "top",
+  //       animationIn: ["animated", "fadeIn"],
+  //       animationOut: ["animated", "fadeOut"],
+  //       container: "top-right",
+  //       dismiss: {
+  //         duration: 5000,
+  //         click: false,
+  //       },
+  //     });
+  //     return;
+  //   });
 };
 
 export const sortTile = (

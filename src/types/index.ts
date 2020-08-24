@@ -2,6 +2,7 @@ export interface User {
   name: string;
   uid: string;
   email: string;
+  backgroundUrl: string;
 }
 export interface Board {
   boardId: string;
@@ -14,10 +15,10 @@ export interface Tile {
   id: string;
   position: number;
   title: string;
-  items: Items[];
+  items: Item[];
 }
 
-export interface Items {
+export interface Item {
   title: string;
   cardId: string;
   position: number;

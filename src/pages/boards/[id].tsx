@@ -2,14 +2,20 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import FirebaseService from "../../services";
 import { connect } from "react-redux";
-import { Tile } from "../../types";
+import { Tile, Item, User } from "../../types";
 import Head from "next/head";
 import SiriusList from "../../components/SiriusList";
 import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
 import SiriusActionButton from "../../components/SiriusActionButton";
 import { sortTile, addBoardToStore } from "../../store/actions/TileAction";
 
-const Board = (props) => {
+interface Props {
+  tiles: Tile[];
+  user?: User;
+  dispatch?: Function;
+}
+
+const Board = (props: Props) => {
   const router = useRouter();
   const { id } = router.query;
 
@@ -17,17 +23,16 @@ const Board = (props) => {
   const [error, setError] = useState("");
 
   const getTiles = async (uid: string, boardId: string) => {
-    setLoading(true);
-    await FirebaseService.getTiles(uid, boardId)
-      .then((tiles) => {
-        console.log(tiles);
-        props.addBoardToStore(tiles);
-        setLoading(false);
-      })
-      .catch((e) => {
-        setLoading(false);
-        setError(e.message);
-      });
+    setLoading(false);
+    // await FirebaseService.getTiles(uid, boardId)
+    //   .then((tiles) => {
+    // props.addBoardToStore(tiles);
+    //   setLoading(false);
+    // })
+    // .catch((e) => {
+    //   setLoading(false);
+    //   setError(e.message);
+    // });
   };
 
   useEffect(() => {
@@ -43,6 +48,10 @@ const Board = (props) => {
     }
   }, [props.user]);
 
+  useEffect(() => {
+    console.log(props.tiles);
+  }, [props.tiles]);
+
   const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId, type } = result;
 
@@ -50,13 +59,15 @@ const Board = (props) => {
       return;
     }
 
-    props.sortTile(
-      source.droppableId,
-      destination.droppableId,
-      source.index,
-      destination.index,
-      draggableId,
-      type
+    props.dispatch(
+      sortTile(
+        source.droppableId,
+        destination.droppableId,
+        source.index,
+        destination.index,
+        draggableId,
+        type
+      )
     );
   };
 
@@ -76,23 +87,10 @@ const Board = (props) => {
               {!loading &&
                 props.tiles.length > 0 &&
                 props.tiles.map((tile, i) => (
-                  <SiriusList
-                    key={tile.id}
-                    title={tile.title}
-                    tileId={tile.id}
-                    cards={tile.items}
-                    idx={i}
-                    userId={props.user.uid}
-                    boardId={id}
-                    tilePosition={tile.position}
-                  />
+                  <SiriusList key={tile.id} tile={tile} />
                 ))}
               {provided.placeholder}
-              <SiriusActionButton
-                list={true}
-                userId={props.user.uid}
-                boardId={id}
-              />
+              <SiriusActionButton isList={true} />
             </div>
           )}
         </Droppable>
@@ -105,4 +103,4 @@ const mapStateToProps = (state) => {
   return { user: state.auth.user, tiles: state.tiles };
 };
 
-export default connect(mapStateToProps, { sortTile, addBoardToStore })(Board);
+export default connect(mapStateToProps)(Board);
