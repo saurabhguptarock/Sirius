@@ -126,11 +126,11 @@ export const addCard = (
 };
 
 export const sortTile = (
-  droppableIdStart,
-  droppableIdEnd,
-  droppableIndexStart,
-  droppableIndexEnd,
-  type
+  droppableIdStart: any,
+  droppableIdEnd: any,
+  droppableIndexStart: any,
+  droppableIndexEnd: any,
+  type: string
 ) => {
   return {
     type: DRAG_END,

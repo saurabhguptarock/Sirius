@@ -84,14 +84,14 @@ const Board = (props: Props) => {
                     key={tile.id}
                     tile={tile}
                     idx={i}
-                    userId={props.user.uid}
+                    userId={props.user?.uid}
                     boardId={id as string}
                   />
                 ))}
               {provided.placeholder}
               <SiriusActionButton
                 isTile={true}
-                userId={props.user.uid}
+                userId={props.user?.uid}
                 boardId={id as string}
                 noOfTiles={props.tiles.length}
               />

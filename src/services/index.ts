@@ -75,6 +75,8 @@ class FirebaseAuthService {
                 uid: firebaseUser.uid,
                 email: firebaseUser.email,
                 name: firebaseUser.displayName,
+                recentBoard: "",
+                backgroundUrl: "",
               })
                 .then(() => {
                   return {
