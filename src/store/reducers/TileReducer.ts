@@ -1,5 +1,7 @@
 import { ADD_CARD, ADD_TILE, DRAG_END, ADD_BOARD } from "../actions/TileAction";
 import { Tile, Item } from "../../types";
+import { store } from "react-notifications-component";
+import FirebaseService from "../../services";
 
 const initialState: Tile[] = [];
 
@@ -45,6 +47,8 @@ const TileReducer = (state = initialState, action) => {
         droppableIndexStart,
         droppableIndexEnd,
         type,
+        userId,
+        boardId,
       } = action.payload;
       let newState = [...state];
 
@@ -89,7 +93,32 @@ const TileReducer = (state = initialState, action) => {
           });
         }
         tile.items = items;
-        newState.splice(tile.position, 1, tile);
+        // TODO: check if it effects anything
+        // newState.splice(tile.position, 1, tile);
+
+        // Firebase Update
+        FirebaseService.firestore
+          .doc(`users/${userId}/boards/${boardId}/tiles/${droppableIdStart}`)
+          .update({
+            items,
+          })
+          .then(() => {})
+          .catch((e) => {
+            store.addNotification({
+              title: "Some error occurred",
+              message: e.message,
+              type: "danger",
+              insert: "top",
+              animationIn: ["animated", "fadeIn"],
+              animationOut: ["animated", "fadeOut"],
+              container: "top-right",
+              dismiss: {
+                duration: 5000,
+                click: false,
+              },
+            });
+            return;
+          });
         return newState;
       }
 
@@ -119,7 +148,49 @@ const TileReducer = (state = initialState, action) => {
         tileStart.items = tileStartItems;
         tileEnd.items = tileEndItems;
 
-        // TODO : Check why i put it here
+        FirebaseService.firestore
+          .doc(`users/${userId}/boards/${boardId}/tiles/${droppableIdStart}`)
+          .update({ items: tileStartItems })
+          .then(() => {})
+          .catch((e) => {
+            store.addNotification({
+              title: "Some error occurred",
+              message: e.message,
+              type: "danger",
+              insert: "top",
+              animationIn: ["animated", "fadeIn"],
+              animationOut: ["animated", "fadeOut"],
+              container: "top-right",
+              dismiss: {
+                duration: 5000,
+                click: false,
+              },
+            });
+            return;
+          });
+
+        FirebaseService.firestore
+          .doc(`users/${userId}/boards/${boardId}/tiles/${droppableIdEnd}`)
+          .update({ items: tileEndItems })
+          .then(() => {})
+          .catch((e) => {
+            store.addNotification({
+              title: "Some error occurred",
+              message: e.message,
+              type: "danger",
+              insert: "top",
+              animationIn: ["animated", "fadeIn"],
+              animationOut: ["animated", "fadeOut"],
+              container: "top-right",
+              dismiss: {
+                duration: 5000,
+                click: false,
+              },
+            });
+            return;
+          });
+
+        // TODO : check if it effects anything
         // if (tileStart.position > tileEnd.position) {
         //   newState.splice(tileEnd.position, 2, tileEnd, tileStart);
         // } else {

@@ -59,7 +59,9 @@ const Board = (props: Props) => {
         destination.droppableId,
         source.index,
         destination.index,
-        type
+        type,
+        props.user.uid,
+        id as string
       )
     );
   };

@@ -130,7 +130,9 @@ export const sortTile = (
   droppableIdEnd: any,
   droppableIndexStart: any,
   droppableIndexEnd: any,
-  type: string
+  type: string,
+  userId: string,
+  boardId: string
 ) => {
   return {
     type: DRAG_END,
@@ -140,6 +142,8 @@ export const sortTile = (
       droppableIndexStart,
       droppableIndexEnd,
       type,
+      userId,
+      boardId,
     },
   };
 };
