@@ -23,16 +23,16 @@ const Board = (props: Props) => {
   const [error, setError] = useState("");
 
   const getTiles = async (uid: string, boardId: string) => {
-    setLoading(false);
-    // await FirebaseService.getTiles(uid, boardId)
-    //   .then((tiles) => {
-    // props.addBoardToStore(tiles);
-    //   setLoading(false);
-    // })
-    // .catch((e) => {
-    //   setLoading(false);
-    //   setError(e.message);
-    // });
+    setLoading(true);
+    await FirebaseService.getTiles(uid, boardId)
+      .then((tiles) => {
+        props.dispatch(addBoardToStore(tiles));
+        setLoading(false);
+      })
+      .catch((e) => {
+        setLoading(false);
+        setError(e.message);
+      });
   };
 
   useEffect(() => {
@@ -80,10 +80,21 @@ const Board = (props: Props) => {
               {!loading &&
                 props.tiles.length > 0 &&
                 props.tiles.map((tile: Tile, i) => (
-                  <SiriusList key={tile.id} tile={tile} idx={i} />
+                  <SiriusList
+                    key={tile.id}
+                    tile={tile}
+                    idx={i}
+                    userId={props.user.uid}
+                    boardId={id as string}
+                  />
                 ))}
               {provided.placeholder}
-              <SiriusActionButton isList={true} />
+              <SiriusActionButton
+                isTile={true}
+                userId={props.user.uid}
+                boardId={id as string}
+                noOfTiles={props.tiles.length}
+              />
             </div>
           )}
         </Droppable>

@@ -7,10 +7,13 @@ import { Tile } from "../types";
 interface Props {
   tile: Tile;
   idx: number;
+  boardId: string;
+  userId: string;
 }
 
 const SiriusList = (props: Props) => {
   return (
+    // TODO : change to only drag if grabbed from title
     <Draggable draggableId={props.tile.id} index={props.idx}>
       {(dragProvided) => (
         <div
@@ -34,13 +37,10 @@ const SiriusList = (props: Props) => {
                 ))}
                 {dropProvided.placeholder}
                 <SiriusActionButton
-                  isList={false}
+                  isTile={false}
                   tileProps={props.tile}
-                  // userId={userId}
-                  // boardId={boardId}
-                  // tileId={tileId}
-                  // noOfCards={cards.length}
-                  // tilePosition={tilePosition}
+                  userId={props.userId}
+                  boardId={props.boardId}
                 />
               </div>
             )}

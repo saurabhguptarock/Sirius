@@ -5,8 +5,11 @@ import { addTile, addCard } from "../store/actions/TileAction";
 import { Tile } from "../types";
 
 interface Props {
-  isList: boolean;
+  isTile: boolean;
   tileProps?: Tile;
+  userId: string;
+  boardId: string;
+  noOfTiles?: number;
   addTile?: Function;
   addCard?: Function;
   dispatch?: Function;
@@ -20,7 +23,9 @@ const SiriusActionButton = (props: Props) => {
 
   const handleAddTile = () => {
     if (text) {
-      props.dispatch(addTile(text));
+      props.dispatch(
+        addTile(props.userId, props.boardId, text, props.noOfTiles)
+      );
       setText("");
     }
     return;
@@ -30,6 +35,8 @@ const SiriusActionButton = (props: Props) => {
     if (text) {
       props.dispatch(
         addCard(
+          props.userId,
+          props.boardId,
           props.tileProps.id,
           text,
           props.tileProps.items.length,
@@ -42,10 +49,10 @@ const SiriusActionButton = (props: Props) => {
   };
 
   const renderAddButton = () => {
-    const btnText = props.isList ? "Add another Tile" : "Add another Card";
-    const btnTextOpacity = props.isList ? 1 : 0.5;
-    const btnTextColor = props.isList ? "white" : "inherit";
-    const btnTextBackground = props.isList ? "rgba(0,0,0,0.15)" : "inherit";
+    const btnText = props.isTile ? "Add another Tile" : "Add another Card";
+    const btnTextOpacity = props.isTile ? 1 : 0.5;
+    const btnTextColor = props.isTile ? "white" : "inherit";
+    const btnTextBackground = props.isTile ? "rgba(0,0,0,0.15)" : "inherit";
 
     return (
       <div
@@ -70,10 +77,10 @@ const SiriusActionButton = (props: Props) => {
   };
 
   const renderForm = () => {
-    const placeHolder = props.isList
+    const placeHolder = props.isTile
       ? "Enter tile Title"
       : "Enter title for the card...";
-    const btnTitle = props.isList ? "Add Tile" : "Add Card";
+    const btnTitle = props.isTile ? "Add Tile" : "Add Card";
 
     return (
       <div>
@@ -110,7 +117,7 @@ const SiriusActionButton = (props: Props) => {
           className="mt-3"
         >
           <button
-            onMouseDown={props.isList ? handleAddTile : handleAddCard}
+            onMouseDown={props.isTile ? handleAddTile : handleAddCard}
             className="button is-success"
           >
             {btnTitle}
@@ -127,8 +134,4 @@ const SiriusActionButton = (props: Props) => {
   return formOpen ? renderForm() : renderAddButton();
 };
 
-const mapStateToProps = (state) => {
-  return { tile: state.tile };
-};
-
-export default connect(mapStateToProps)(SiriusActionButton);
+export default connect()(SiriusActionButton);

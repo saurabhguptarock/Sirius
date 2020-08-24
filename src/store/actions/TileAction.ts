@@ -16,60 +16,80 @@ export const addBoardToStore = (tiles: Tile[]) => {
     };
 };
 
-export const addTile = (title: string) => async (dispatch) => {
-  // await FirebaseService.firestore
-  //   .doc(`users/${userId}/boards/${boardId}/tiles/${tileId}`)
-  //   .set(
-  //     {
-  //       id: String(tileId),
-  //       title,
-  //       items: [],
-  //     },
-  //     { merge: false }
-  //   )
-  //   .then((data) =>
-  //     dispatch({
-  //       type: ADD_TILE,
-  //       payload: {
-  //         id: tileId,
-  //         title,
-  //       },
-  //     })
-  //   )
-  //   .catch((e) => {
-  //     store.addNotification({
-  //       title: "Some error occurred",
-  //       message: e.message,
-  //       type: "danger",
-  //       insert: "top",
-  //       animationIn: ["animated", "fadeIn"],
-  //       animationOut: ["animated", "fadeOut"],
-  //       container: "top-right",
-  //       dismiss: {
-  //         duration: 5000,
-  //         click: false,
-  //       },
-  //     });
-  //     return;
-  //   });
-  // TODO:Change to dynamic id
-  return dispatch({
-    type: ADD_TILE,
-    payload: {
-      id: "sd3fa90po23df89sfa4ds65454u8afa2",
+export const addTile = (
+  userId: string,
+  boardId: string,
+  title: string,
+  position: number
+) => async (dispatch) => {
+  await FirebaseService.firestore
+    .collection(`users/${userId}/boards/${boardId}/tiles`)
+    .add({
+      id: "",
       title,
-    },
-  });
+      position,
+      items: [],
+    })
+    .then(
+      async (data) =>
+        await data
+          .update({ id: data.id })
+          .then(() =>
+            dispatch({
+              type: ADD_TILE,
+              payload: {
+                id: data.id,
+                title,
+                position,
+                items: [],
+              },
+            })
+          )
+          .catch((e) => {
+            store.addNotification({
+              title: "Some error occurred",
+              message: e.message,
+              type: "danger",
+              insert: "top",
+              animationIn: ["animated", "fadeIn"],
+              animationOut: ["animated", "fadeOut"],
+              container: "top-right",
+              dismiss: {
+                duration: 5000,
+                click: false,
+              },
+            });
+            return;
+          })
+    )
+    .catch((e) => {
+      store.addNotification({
+        title: "Some error occurred",
+        message: e.message,
+        type: "danger",
+        insert: "top",
+        animationIn: ["animated", "fadeIn"],
+        animationOut: ["animated", "fadeOut"],
+        container: "top-right",
+        dismiss: {
+          duration: 5000,
+          click: false,
+        },
+      });
+      return;
+    });
 };
 
 export const addCard = (
+  userId: string,
+  boardId: string,
   tileId: string,
   title: string,
   cardPosition: number,
   tilePosition: number
 ) => async (dispatch) => {
   // TODO : Revert changes in store if update fails
-  return dispatch({
+  dispatch({
     type: ADD_CARD,
     payload: {
       tileId,
@@ -78,32 +98,31 @@ export const addCard = (
       tilePosition,
     },
   });
-  // await FirebaseService.firestore
-  //   .doc(`users/${userId}/boards/${boardId}/tiles/${tileId}`)
-  //   .update({
-  //     items: firebase.firestore.FieldValue.arrayUnion({
-  //       cardId: `card-${tilePosition}-${cardPosition}`,
-  //       title,
-  //       position: cardPosition,
-  //     }),
-  //   })
-  //   .then(() => {})
-  //   .catch((e) => {
-  //     store.addNotification({
-  //       title: "Some error occurred",
-  //       message: e.message,
-  //       type: "danger",
-  //       insert: "top",
-  //       animationIn: ["animated", "fadeIn"],
-  //       animationOut: ["animated", "fadeOut"],
-  //       container: "top-right",
-  //       dismiss: {
-  //         duration: 5000,
-  //         click: false,
-  //       },
-  //     });
-  //     return;
-  //   });
+  await FirebaseService.firestore
+    .doc(`users/${userId}/boards/${boardId}/tiles/${tileId}`)
+    .update({
+      items: firebase.firestore.FieldValue.arrayUnion({
+        cardId: `card-${tilePosition}-${cardPosition}`,
+        title,
+      }),
+    })
+    .then(() => {})
+    .catch((e) => {
+      store.addNotification({
+        title: "Some error occurred",
+        message: e.message,
+        type: "danger",
+        insert: "top",
+        animationIn: ["animated", "fadeIn"],
+        animationOut: ["animated", "fadeOut"],
+        container: "top-right",
+        dismiss: {
+          duration: 5000,
+          click: false,
+        },
+      });
+      return;
+    });
 };
 
 export const sortTile = (
