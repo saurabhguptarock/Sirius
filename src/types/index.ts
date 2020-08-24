@@ -3,6 +3,7 @@ export interface User {
   uid: string;
   email: string;
   backgroundUrl: string;
+  recentBoard: string;
 }
 export interface Board {
   boardId: string;

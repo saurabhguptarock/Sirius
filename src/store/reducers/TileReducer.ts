@@ -45,7 +45,7 @@ const TileReducer = (state = initialState, action) => {
       const newCard: Item = {
         title: action.payload.title,
         position: action.payload.cardPosition,
-        cardId: `card-${tilePosition}-${action.payload.cardPosition}`,
+        cardId: `card-${action.payload.tilePosition}-${action.payload.cardPosition}`,
       };
       const newState = state.map((tile) => {
         if (tile.id === action.payload.tileId) {
@@ -79,20 +79,39 @@ const TileReducer = (state = initialState, action) => {
 
       // In same Tile
       if (droppableIdStart === droppableIdEnd) {
-        const tiles = state.find((tile) => droppableIdStart === tile.id);
-        const items = tiles.items.splice(droppableIndexStart, 1);
-        tiles.items.splice(droppableIndexEnd, 0, ...items);
+        const tile = state.find((tile) => droppableIdStart === tile.id);
+        let items = tile.items.splice(droppableIndexStart, 1);
+        tile.items.splice(droppableIndexEnd, 0, ...items);
+        // items = tile.items.filter((items) => {
+        //   items.cardId = `card-${tile.position}-`;
+
+        //   const newArray = [];
+
+        //   return newArray;
+        // });
+        const newTile: Tile = {
+          id: tile.id,
+          items,
+          position: tile.position,
+          title: tile.title,
+        };
+        const tmpState = state.splice(droppableIdStart, 1);
+
+        return [...state, newTile];
       }
 
       // In other Tile
-      else {
+      else if (droppableIdStart !== droppableIdEnd) {
         const tileStart = state.find((tile) => droppableIdStart === tile.id);
         const items = tileStart.items.splice(droppableIndexStart, 1);
         const tileEnd = state.find((tile) => droppableIdEnd === tile.id);
         tileEnd.items.splice(droppableIndexEnd, 0, ...items);
-      }
-
-      return newState;
+        return {
+          ...state,
+          [droppableIdStart]: tileStart,
+          [droppableIdEnd]: tileEnd,
+        };
+      } else return newState;
     }
 
     default:

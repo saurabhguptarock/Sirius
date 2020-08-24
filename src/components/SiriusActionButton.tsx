@@ -29,7 +29,12 @@ const SiriusActionButton = (props: Props) => {
   const handleAddCard = () => {
     if (text) {
       props.dispatch(
-        addCard(props.tileProps.id, text, props.tileProps.items.length)
+        addCard(
+          props.tileProps.id,
+          text,
+          props.tileProps.items.length,
+          props.tileProps.position
+        )
       );
       setText("");
     }

@@ -22,8 +22,13 @@ const SiriusCard = (props: Props) => {
               borderRadius: "5px",
             }}
           >
-            <div className="card-content">
-              <p>{props.item.title}</p>
+            <div
+              className="card-content"
+              style={{
+                padding: "0.6rem",
+              }}
+            >
+              <p style={{ wordWrap: "break-word" }}>{props.item.title}</p>
             </div>
           </div>
         </div>

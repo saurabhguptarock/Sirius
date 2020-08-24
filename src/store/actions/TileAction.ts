@@ -65,7 +65,8 @@ export const addTile = (title: string) => async (dispatch) => {
 export const addCard = (
   tileId: string,
   title: string,
-  cardPosition: number
+  cardPosition: number,
+  tilePosition: number
 ) => async (dispatch) => {
   // TODO : Revert changes in store if update fails
   return dispatch({
@@ -74,6 +75,7 @@ export const addCard = (
       tileId,
       title,
       cardPosition,
+      tilePosition,
     },
   });
   // await FirebaseService.firestore
