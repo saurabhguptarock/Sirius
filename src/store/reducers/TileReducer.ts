@@ -68,11 +68,11 @@ const TileReducer = (state = initialState, action) => {
       const newState = [...state];
 
       // Dragging tiles
-      // if (type === "tile") {
-      //   const tiles = newState.splice(droppableIndexStart, 1);
-      //   newState.splice(droppableIndexEnd, 0, ...tiles);
-      //   return newState;
-      // }
+      if (type === "tile") {
+        const tiles = newState.splice(droppableIndexStart, 1)[0];
+        newState.splice(droppableIndexEnd, 0, tiles);
+        return newState;
+      }
 
       // In same Tile
       if (droppableIdStart === droppableIdEnd) {

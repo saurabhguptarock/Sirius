@@ -53,12 +53,6 @@ const Board = (props: Props) => {
     if (!destination) {
       return;
     }
-    console.log({
-      sourceDroppableId: source.droppableId,
-      destinationDroppableId: destination.droppableId,
-      sourceIndex: source.index,
-      destinationIndex: destination.index,
-    });
     props.dispatch(
       sortTile(
         source.droppableId,
@@ -76,14 +70,23 @@ const Board = (props: Props) => {
         <title>Create Next App</title>
       </Head>
       <DragDropContext onDragEnd={onDragEnd}>
-        <div className="columns mt-5">
-          {!loading &&
-            props.tiles.length > 0 &&
-            props.tiles.map((tile: Tile) => (
-              <SiriusList key={tile.id} tile={tile} />
-            ))}
-          <SiriusActionButton isList={true} />
-        </div>
+        <Droppable droppableId="all-list" direction="horizontal" type="tile">
+          {(provided) => (
+            <div
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+              className="columns mt-5"
+            >
+              {!loading &&
+                props.tiles.length > 0 &&
+                props.tiles.map((tile: Tile, i) => (
+                  <SiriusList key={tile.id} tile={tile} idx={i} />
+                ))}
+              {provided.placeholder}
+              <SiriusActionButton isList={true} />
+            </div>
+          )}
+        </Droppable>
       </DragDropContext>
     </div>
   );
