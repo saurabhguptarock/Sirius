@@ -1,8 +1,6 @@
 import { ADD_CARD, ADD_TILE, DRAG_END, ADD_BOARD } from "../actions/TileAction";
 import { Tile, Item } from "../../types";
 
-let tilePosition = 2;
-
 const initialState: Tile[] = [
   {
     id: "sd3fa90po234sdf89sdf7sfu8afa2",
@@ -32,10 +30,9 @@ const TileReducer = (state = initialState, action) => {
       const newList = {
         title: action.payload.title,
         id: action.payload.id,
-        position: tilePosition,
+        position: state.length,
         items: [],
       };
-      tilePosition += 1;
       return [...state, newList];
     }
 
@@ -113,7 +110,7 @@ const TileReducer = (state = initialState, action) => {
       }
 
       // In other Tile
-      else if (droppableIdStart !== droppableIdEnd) {
+      if (droppableIdStart !== droppableIdEnd) {
         const tileStart = state.find((tile) => droppableIdStart === tile.id);
         const item = tileStart.items.splice(droppableIndexStart, 1)[0];
         const tileEnd = state.find((tile) => droppableIdEnd === tile.id);
@@ -138,11 +135,12 @@ const TileReducer = (state = initialState, action) => {
         tileStart.items = tileStartItems;
         tileEnd.items = tileEndItems;
 
-        if (tileStart.position > tileEnd.position) {
-          newState.splice(tileEnd.position, 2, tileEnd, tileStart);
-        } else {
-          newState.splice(tileStart.position, 2, tileStart, tileEnd);
-        }
+        // TODO : Check why i put it here
+        // if (tileStart.position > tileEnd.position) {
+        //   newState.splice(tileEnd.position, 2, tileEnd, tileStart);
+        // } else {
+        //   newState.splice(tileStart.position, 2, tileStart, tileEnd);
+        // }
 
         return newState;
       } else return newState;
