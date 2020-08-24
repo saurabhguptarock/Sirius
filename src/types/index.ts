@@ -22,5 +22,4 @@ export interface Tile {
 export interface Item {
   title: string;
   cardId: string;
-  position: number;
 }
