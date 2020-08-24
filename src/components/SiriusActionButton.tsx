@@ -2,17 +2,19 @@ import React, { useState } from "react";
 import TextArea from "react-textarea-autosize";
 import { connect } from "react-redux";
 import { addTile, addCard } from "../store/actions/TileAction";
-import { Item } from "../types";
+import { Tile } from "../types";
 
 interface Props {
-  item?: Item;
+  isList: boolean;
+  tileProps?: Tile;
   addTile?: Function;
   addCard?: Function;
   dispatch?: Function;
-  isList: boolean;
 }
 
 const SiriusActionButton = (props: Props) => {
+  console.log(props.tileProps);
+
   const [formOpen, setFormOpen] = useState(false);
   const [text, setText] = useState("");
 
@@ -28,14 +30,9 @@ const SiriusActionButton = (props: Props) => {
 
   const handleAddCard = () => {
     if (text) {
-      // props.addCard(
-      //   props.userId,
-      //   props.boardId,
-      //   props.tileId,
-      //   props.noOfCards,
-      //   text,
-      //   props.tilePosition
-      // );
+      props.dispatch(
+        addCard(props.tileProps.id, text, props.tileProps.position)
+      );
       setText("");
     }
     return;

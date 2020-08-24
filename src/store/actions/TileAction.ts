@@ -52,6 +52,7 @@ export const addTile = (title: string) => async (dispatch) => {
   //     });
   //     return;
   //   });
+  // TODO:Change to dynamic id
   return dispatch({
     type: ADD_TILE,
     payload: {
@@ -62,10 +63,7 @@ export const addTile = (title: string) => async (dispatch) => {
 };
 
 export const addCard = (
-  userId: string,
-  boardId: string,
   tileId: string,
-  cardPosition: string,
   title: string,
   tilePosition: number
 ) => async (dispatch) => {
@@ -74,7 +72,6 @@ export const addCard = (
     type: ADD_CARD,
     payload: {
       tileId,
-      cardPosition,
       tilePosition,
       title,
     },

@@ -32,6 +32,7 @@ const SiriusList = (props: Props) => {
           ))}
           <SiriusActionButton
             isList={false}
+            tileProps={props.tile}
             // userId={userId}
             // boardId={boardId}
             // tileId={tileId}

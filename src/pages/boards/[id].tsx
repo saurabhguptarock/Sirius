@@ -86,7 +86,7 @@ const Board = (props: Props) => {
             >
               {!loading &&
                 props.tiles.length > 0 &&
-                props.tiles.map((tile, i) => (
+                props.tiles.map((tile: Tile) => (
                   <SiriusList key={tile.id} tile={tile} />
                 ))}
               {provided.placeholder}
