@@ -27,8 +27,8 @@ const SiriusList = (props: Props) => {
           <h4 style={{ fontSize: "1.5rem", fontWeight: 600 }}>
             {props.tile.title}
           </h4>
-          {props.tile.items.map((item) => (
-            <SiriusCard key={item.cardId} item={item} />
+          {props.tile.items.map((item, i) => (
+            <SiriusCard key={item.cardId} item={item} index={i} />
           ))}
           {provided.placeholder}
           <SiriusActionButton

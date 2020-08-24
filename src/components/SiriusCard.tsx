@@ -4,11 +4,12 @@ import { Item } from "../types";
 
 interface Props {
   item: Item;
+  index: number;
 }
 
 const SiriusCard = (props: Props) => {
   return (
-    <Draggable draggableId={props.item.cardId} index={props.item.position}>
+    <Draggable draggableId={props.item.cardId} index={props.index}>
       {(provided) => (
         <div
           ref={provided.innerRef}

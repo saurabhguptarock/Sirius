@@ -80,8 +80,8 @@ const TileReducer = (state = initialState, action) => {
       // In same Tile
       if (droppableIdStart === droppableIdEnd) {
         const tile = state.find((tile) => droppableIdStart === tile.id);
-        const item = tile.items.splice(droppableIndexStart, 1)[0];
-        tile.items.splice(droppableIndexEnd, 0, item);
+        const item = tile.items.splice(droppableIndexStart, 1);
+        tile.items.splice(droppableIndexEnd, 0, ...item);
         newState.splice(tile.position, 1, tile);
         return newState;
       }
@@ -89,9 +89,9 @@ const TileReducer = (state = initialState, action) => {
       // In other Tile
       else if (droppableIdStart !== droppableIdEnd) {
         const tileStart = state.find((tile) => droppableIdStart === tile.id);
-        const item = tileStart.items.splice(droppableIndexStart, 1)[0];
+        const item = tileStart.items.splice(droppableIndexStart, 1);
         const tileEnd = state.find((tile) => droppableIdEnd === tile.id);
-        tileEnd.items.splice(droppableIndexEnd, 0, item);
+        tileEnd.items.splice(droppableIndexEnd, 0, ...item);
 
         if (tileStart.position > tileEnd.position) {
           newState.splice(tileEnd.position, 2, tileEnd, tileStart);
