@@ -5,14 +5,14 @@ import { connect } from "react-redux";
 import { Tile } from "../../types";
 import Head from "next/head";
 import SiriusList from "../../components/SiriusList";
-import { DragDropContext } from "react-beautiful-dnd";
+import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
 import SiriusActionButton from "../../components/SiriusActionButton";
+import { sortTile, addBoardToStore } from "../../store/actions/TileAction";
 
 const Board = (props) => {
   const router = useRouter();
   const { id } = router.query;
 
-  const [tiles, setTiles] = useState<Tile[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -20,7 +20,8 @@ const Board = (props) => {
     setLoading(true);
     await FirebaseService.getTiles(uid, boardId)
       .then((tiles) => {
-        setTiles(tiles);
+        console.log(tiles);
+        props.addBoardToStore(tiles);
         setLoading(false);
       })
       .catch((e) => {
@@ -42,8 +43,21 @@ const Board = (props) => {
     }
   }, [props.user]);
 
-  const onDragEnd = () => {
-    // TODO: implement
+  const onDragEnd = (result: DropResult) => {
+    const { destination, source, draggableId, type } = result;
+
+    if (!destination) {
+      return;
+    }
+
+    props.sortTile(
+      source.droppableId,
+      destination.droppableId,
+      source.index,
+      destination.index,
+      draggableId,
+      type
+    );
   };
 
   return (
@@ -52,26 +66,43 @@ const Board = (props) => {
         <title>Create Next App</title>
       </Head>
       <DragDropContext onDragEnd={onDragEnd}>
-        <div className="columns mt-5">
-          {!loading &&
-            tiles.length > 0 &&
-            tiles.map((tile) => (
-              <SiriusList
-                key={tile.id}
-                title={tile.title}
-                tileId={tile.id}
-                cards={tile.items}
+        <Droppable droppableId="all-tiles" direction="horizontal" type="tile">
+          {(provided) => (
+            <div
+              className="columns mt-5"
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              {!loading &&
+                props.tiles.length > 0 &&
+                props.tiles.map((tile, i) => (
+                  <SiriusList
+                    key={tile.id}
+                    title={tile.title}
+                    tileId={tile.id}
+                    cards={tile.items}
+                    idx={i}
+                    userId={props.user.uid}
+                    boardId={id}
+                    tilePosition={tile.position}
+                  />
+                ))}
+              {provided.placeholder}
+              <SiriusActionButton
+                list={true}
+                userId={props.user.uid}
+                boardId={id}
               />
-            ))}
-          <SiriusActionButton list={true} />
-        </div>
+            </div>
+          )}
+        </Droppable>
       </DragDropContext>
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
-  return { user: state.auth.user };
+  return { user: state.auth.user, tiles: state.tiles };
 };
 
-export default connect(mapStateToProps)(Board);
+export default connect(mapStateToProps, { sortTile, addBoardToStore })(Board);

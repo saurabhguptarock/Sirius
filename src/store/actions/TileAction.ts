@@ -1,19 +1,133 @@
+import FirebaseService from "../../services";
+import firebase from "firebase/app";
+import { store } from "react-notifications-component";
+import { Tile } from "../../types";
+
+export const ADD_BOARD = "ADD_BOARD";
 export const ADD_TILE = "ADD_TILE";
 export const ADD_CARD = "ADD_CARD";
+export const DRAG_END = "DRAG_END";
 
-export const addTile = (title: string) => {
-  return {
-    type: ADD_TILE,
-    title,
-  };
+export const addBoardToStore = (tiles: Tile[]) => {
+  if (tiles)
+    return {
+      type: ADD_BOARD,
+      tiles,
+    };
 };
 
-export const addCard = (tileId: string, content: string) => {
-  return {
+export const addTile = (
+  userId: string,
+  boardId: string,
+  title: string,
+  tileId: number
+) => async (dispatch) => {
+  console.log({
+    userId,
+    boardId,
+    title,
+    tileId,
+  });
+  await FirebaseService.firestore
+    .doc(`users/${userId}/boards/${boardId}/tiles/${tileId}`)
+    .set(
+      {
+        id: String(tileId),
+        title,
+        items: [],
+      },
+      { merge: false }
+    )
+    .then((data) =>
+      dispatch({
+        type: ADD_TILE,
+        payload: {
+          id: tileId,
+          title,
+        },
+      })
+    )
+    .catch((e) => {
+      store.addNotification({
+        title: "Some error occurred",
+        message: e.message,
+        type: "danger",
+        insert: "top",
+        animationIn: ["animated", "fadeIn"],
+        animationOut: ["animated", "fadeOut"],
+        container: "top-right",
+        dismiss: {
+          duration: 5000,
+          click: false,
+        },
+      });
+      return;
+    });
+};
+
+export const addCard = (
+  userId: string,
+  boardId: string,
+  tileId: string,
+  cardPosition: string,
+  title: string,
+  tilePosition: number
+) => async (dispatch) => {
+  // TODO : Revert changes in store if update fails
+  dispatch({
     type: ADD_CARD,
     payload: {
       tileId,
-      content,
+      cardPosition,
+      tilePosition,
+      title,
+    },
+  });
+  await FirebaseService.firestore
+    .doc(`users/${userId}/boards/${boardId}/tiles/${tileId}`)
+    .update({
+      items: firebase.firestore.FieldValue.arrayUnion({
+        cardId: `card-${tilePosition}-${cardPosition}`,
+        title,
+        position: cardPosition,
+      }),
+    })
+    .then(() => {})
+    .catch((e) => {
+      store.addNotification({
+        title: "Some error occurred",
+        message: e.message,
+        type: "danger",
+        insert: "top",
+        animationIn: ["animated", "fadeIn"],
+        animationOut: ["animated", "fadeOut"],
+        container: "top-right",
+        dismiss: {
+          duration: 5000,
+          click: false,
+        },
+      });
+      return;
+    });
+};
+
+export const sortTile = (
+  droppableIdStart,
+  droppableIdEnd,
+  droppableIndexStart,
+  droppableIndexEnd,
+  draggableId,
+  type
+) => {
+  return {
+    type: DRAG_END,
+    payload: {
+      droppableIdStart,
+      droppableIdEnd,
+      droppableIndexStart,
+      droppableIndexEnd,
+      draggableId,
+      type,
     },
   };
 };

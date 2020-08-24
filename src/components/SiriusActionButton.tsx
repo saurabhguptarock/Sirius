@@ -11,14 +11,22 @@ const SiriusActionButton = (props) => {
 
   const handleAddTile = () => {
     if (text) {
-      props.addTile(text);
+      props.addTile(props.userId, props.boardId, text, props.tileId);
       setText("");
     }
     return;
   };
+
   const handleAddCard = () => {
     if (text) {
-      props.addCard(props.tileId, text);
+      props.addCard(
+        props.userId,
+        props.boardId,
+        props.tileId,
+        props.noOfCards,
+        text,
+        props.tilePosition
+      );
       setText("");
     }
     return;
@@ -110,4 +118,10 @@ const SiriusActionButton = (props) => {
   return formOpen ? renderForm() : renderAddButton();
 };
 
-export default connect(null, { addTile, addCard })(SiriusActionButton);
+const mapStateToProps = (state) => {
+  return { tile: state.tile };
+};
+
+export default connect(mapStateToProps, { addTile, addCard })(
+  SiriusActionButton
+);

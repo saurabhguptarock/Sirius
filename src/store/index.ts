@@ -1,11 +1,17 @@
 import thunk from "redux-thunk";
-import { createStore, applyMiddleware, compose } from "redux";
-import RootReducer from "./reducers";
+import AuthReducer from "./reducers/AuthReducer";
+import TileReducer from "./reducers/TileReducer";
+import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 
 const initialState = {};
 const middleware = [thunk];
 let devtools = (x: any): any => x;
 declare let window: any;
+
+const RootReducer = combineReducers({
+  auth: AuthReducer,
+  tiles: TileReducer,
+});
 
 if (
   process.env.NODE_ENV !== "production" &&

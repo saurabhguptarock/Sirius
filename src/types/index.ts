@@ -20,4 +20,5 @@ export interface Tile {
 export interface Items {
   title: string;
   cardId: string;
+  position: number;
 }

@@ -1,14 +1,23 @@
 import React from "react";
 import SiriusCard from "./SiriusCard";
-import { Droppable } from "react-beautiful-dnd";
+import { Droppable, Draggable } from "react-beautiful-dnd";
 import SiriusActionButton from "./SiriusActionButton";
 
-const SiriusList = ({ title, tileId, cards }) => {
+const SiriusList = ({
+  title,
+  tileId,
+  cards,
+  idx,
+  userId,
+  boardId,
+  tilePosition,
+}) => {
   return (
-    <Droppable droppableId={tileId}>
+    <Draggable draggableId={tileId} index={idx}>
       {(provided) => (
         <div
-          {...provided.droppableProps}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
           ref={provided.innerRef}
           style={{
             padding: "8px",
@@ -19,20 +28,33 @@ const SiriusList = ({ title, tileId, cards }) => {
             marginRight: "8px",
           }}
         >
-          <h4 style={{ fontSize: "1.5rem", fontWeight: 600 }}>{title}</h4>
-          {cards.map((card, i) => (
-            <SiriusCard
-              key={card.cardId}
-              content={card.title}
-              id={card.cardId}
-              idx={i}
-            />
-          ))}
-          <SiriusActionButton list={false} tileId={tileId} />
-          {provided.placeholder}
+          <Droppable droppableId={tileId}>
+            {(provided) => (
+              <div {...provided.droppableProps} ref={provided.innerRef}>
+                <h4 style={{ fontSize: "1.5rem", fontWeight: 600 }}>{title}</h4>
+                {cards.map((card, i) => (
+                  <SiriusCard
+                    key={card.cardId}
+                    content={card.title}
+                    id={card.cardId}
+                    idx={i}
+                  />
+                ))}
+                <SiriusActionButton
+                  list={false}
+                  userId={userId}
+                  boardId={boardId}
+                  tileId={tileId}
+                  noOfCards={cards.length}
+                  tilePosition={tilePosition}
+                />
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
         </div>
       )}
-    </Droppable>
+    </Draggable>
   );
 };
 

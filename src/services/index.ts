@@ -227,7 +227,7 @@ class FirebaseAuthService {
   getTiles = async (uid: string, boardId: string): Promise<Tile[]> => {
     return this.firestore
       .collection(`users/${uid}/boards/${boardId}/tiles`)
-      .orderBy("position")
+      .orderBy("id")
       .get()
       .then((tiles) => {
         return tiles.docs.map((tile) => tile.data());
