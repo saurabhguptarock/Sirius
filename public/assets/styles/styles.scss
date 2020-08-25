@@ -44,3 +44,20 @@ body {
   overflow-y: auto;
   overflow-x: hidden;
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #999;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #444;
+}
