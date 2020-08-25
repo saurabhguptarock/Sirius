@@ -1,10 +1,12 @@
+import { User } from "../../types";
+
 export const LOGIN_USER = "LOGIN_USER";
 export const LOGOUT_USER = "LOGOUT_USER";
 
-export const login = (uid: string) => async (dispatch: Function) => {
+export const login = (user: User) => async (dispatch: Function) => {
   return dispatch({
     type: LOGIN_USER,
-    user: { uid },
+    user,
   });
 };
 

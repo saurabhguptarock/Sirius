@@ -174,13 +174,15 @@ class FirebaseAuthService {
       .doc(docId)
       .get()
       .then((data) => {
-        const { email, name, uid } = data.data();
+        const { email, name, uid, backgroundUrl, recentBoard } = data.data();
 
         return {
           email,
           name,
           uid,
-        };
+          backgroundUrl,
+          recentBoard,
+        } as User;
       })
       .catch((e) => {
         store.addNotification({

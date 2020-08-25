@@ -3,15 +3,23 @@ import { useEffect } from "react";
 import { login, logout } from "../store/actions/AuthAction";
 import FirebaseService from "../services";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { useRouter } from "next/router";
+import { User } from "../types";
 
-const Header = (props) => {
+interface Props {
+  user?: User;
+  dispatch?: Function;
+}
+
+const Header = (props: Props) => {
   const router = useRouter();
 
   useEffect(() => {
-    FirebaseService.auth.onAuthStateChanged((user) => {
-      if (user) props.login(user.uid);
+    FirebaseService.auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        const userData = await FirebaseService.getUserData(user.uid);
+        props.dispatch(login(userData));
+      }
     });
   }, []);
 
@@ -47,7 +55,7 @@ const Header = (props) => {
 
       <div id="navbarBasicExample" className="navbar-menu">
         <div className="navbar-start">
-          <Link href="/add-products">
+          <Link href="/settings">
             <a
               className={
                 router.pathname.split("/")[1] === "boards"
@@ -55,18 +63,7 @@ const Header = (props) => {
                   : "navbar-item"
               }
             >
-              Add Products
-            </a>
-          </Link>
-          <Link href="/orders">
-            <a
-              className={
-                router.pathname.split("/")[1] === "boards"
-                  ? "navbar-item main"
-                  : "navbar-item"
-              }
-            >
-              Orders
+              <i className="fas fa-cog" style={{ fontSize: "1.3rem" }}></i>
             </a>
           </Link>
         </div>
@@ -88,7 +85,13 @@ const Header = (props) => {
                 <Link href="/user-profile">
                   <a className="navbar-item">Profile</a>
                 </Link>
-                <a className="navbar-item" onClick={props.logout}>
+                <a
+                  className="navbar-item"
+                  onClick={async () => {
+                    await FirebaseService.signOut();
+                    props.dispatch(logout());
+                  }}
+                >
                   Logout
                 </a>
               </div>
@@ -98,12 +101,20 @@ const Header = (props) => {
             <div className="navbar-item">
               <div className="buttons">
                 <Link href="/login">
-                  <motion.a
-                    className="button is-primary"
-                    whileHover={{ scale: 1.05 }}
-                  >
+                  <a className="button is-primary">
                     <strong>Log in</strong>
-                  </motion.a>
+                  </a>
+                </Link>
+              </div>
+            </div>
+          )}
+          {!props.user && (
+            <div className="navbar-item">
+              <div className="buttons">
+                <Link href="/register">
+                  <a className="button is-primary">
+                    <strong>Sign up</strong>
+                  </a>
                 </Link>
               </div>
             </div>
@@ -118,4 +129,4 @@ const mapStateToProps = (state) => {
   return { user: state.auth.user };
 };
 
-export default connect(mapStateToProps, { login, logout })(Header);
+export default connect(mapStateToProps)(Header);

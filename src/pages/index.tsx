@@ -4,7 +4,6 @@ import { Board } from "../types";
 import { connect } from "react-redux";
 import FirebaseService from "../services";
 import Link from "next/link";
-import { motion } from "framer-motion";
 
 const Home = (props) => {
   const [boards, setBoards] = useState<Board[]>([]);
@@ -27,6 +26,8 @@ const Home = (props) => {
   useEffect(() => {
     if (props.user) {
       getBoards(props.user.uid);
+    } else {
+      setBoards([]);
     }
   }, [props.user]);
 
