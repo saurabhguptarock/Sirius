@@ -64,7 +64,7 @@ const SiriusActionButton = (props: Props) => {
           display: "flex",
           alignItems: "center",
           cursor: "pointer",
-          borderRadius: "5px",
+          borderRadius: "3px",
           height: 36,
           width: 272,
           minWidth: 272,
@@ -92,7 +92,7 @@ const SiriusActionButton = (props: Props) => {
             minHeight: 80,
             minWidth: 272,
             padding: "6px 8px 2px",
-            borderRadius: "5px",
+            borderRadius: "3px",
           }}
         >
           <TextArea

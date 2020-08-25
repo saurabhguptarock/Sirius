@@ -20,7 +20,7 @@ const SiriusCard = (props: Props) => {
           <div
             className="card"
             style={{
-              borderRadius: "5px",
+              borderRadius: "3px",
             }}
           >
             <div
