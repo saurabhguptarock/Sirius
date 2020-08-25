@@ -19,7 +19,7 @@ steps:
       [
         "run",
         "deploy",
-        "sirius",
+        "siriusbuild",
         "--platform=managed",
         "--region=us-central1",
         "--image=gcr.io/sirius-ff0ae/sirius:$COMMIT_SHA",
