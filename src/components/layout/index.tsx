@@ -4,9 +4,7 @@ import ReactNotification from "react-notifications-component";
 const MainLayout = ({ children }) => (
   <div>
     <ReactNotification />
-    <div className="container">
-      <Header />
-    </div>
+    <Header />
     <div style={{ paddingLeft: "50px" }}>{children}</div>
   </div>
 );

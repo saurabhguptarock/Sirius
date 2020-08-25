@@ -5,6 +5,7 @@ import FirebaseService from "../services";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { User } from "../types";
+import React from "react";
 
 interface Props {
   user?: User;
@@ -31,12 +32,14 @@ const Header = (props: Props) => {
     >
       <div className="navbar-brand">
         <Link href="/">
-          <a className="navbar-item">
-            <img
-              src="https://bulma.io/images/bulma-logo.png"
-              width="112"
-              height="28"
-            />
+          <a
+            className={
+              router.pathname.split("/")[1] === "boards"
+                ? "navbar-item main"
+                : "navbar-item"
+            }
+          >
+            <i className="fas fa-home" style={{ fontSize: "1.3rem" }}></i>
           </a>
         </Link>
 
@@ -70,7 +73,25 @@ const Header = (props: Props) => {
 
         <div className="navbar-end">
           {props.user && (
-            <div className="navbar-item  has-dropdown is-hoverable">
+            <React.Fragment>
+              <a
+                className={
+                  router.pathname.split("/")[1] === "boards"
+                    ? "navbar-item main"
+                    : "navbar-item"
+                }
+              >
+                <i className="fas fa-plus" style={{ fontSize: "1.3rem" }}></i>
+              </a>
+              <a
+                className={
+                  router.pathname.split("/")[1] === "boards"
+                    ? "navbar-item main"
+                    : "navbar-item"
+                }
+              >
+                <i className="fas fa-bell" style={{ fontSize: "1.3rem" }}></i>
+              </a>
               <a
                 className={
                   router.pathname.split("/")[1] === "boards"
@@ -80,22 +101,23 @@ const Header = (props: Props) => {
               >
                 <i className="fas fa-user" style={{ fontSize: "1.3rem" }}></i>
               </a>
-
-              <div className="navbar-dropdown">
-                <Link href="/user-profile">
-                  <a className="navbar-item">Profile</a>
-                </Link>
-                <a
-                  className="navbar-item"
-                  onClick={async () => {
-                    await FirebaseService.signOut();
-                    props.dispatch(logout());
-                  }}
-                >
-                  Logout
-                </a>
-              </div>
-            </div>
+              <a
+                className={
+                  router.pathname.split("/")[1] === "boards"
+                    ? "navbar-item main"
+                    : "navbar-item"
+                }
+                onClick={async () => {
+                  await FirebaseService.signOut();
+                  props.dispatch(logout());
+                }}
+              >
+                <i
+                  className="fas fa-sign-out-alt"
+                  style={{ fontSize: "1.3rem" }}
+                ></i>
+              </a>
+            </React.Fragment>
           )}
           {!props.user && (
             <div className="navbar-item">
