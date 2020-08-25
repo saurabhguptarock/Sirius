@@ -69,7 +69,7 @@ const Board = (props: Props) => {
   return (
     <div>
       <Head>
-        <title>Create Next App</title>
+        <title>Board | {id}</title>
       </Head>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="all-list" direction="horizontal" type="tile">

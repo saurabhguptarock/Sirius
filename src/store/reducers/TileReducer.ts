@@ -74,6 +74,27 @@ const TileReducer = (state = initialState, action) => {
             position: i,
             title: tile.title,
           });
+
+          FirebaseService.firestore
+            .doc(`users/${userId}/boards/${boardId}/tiles/${tile.id}`)
+            .update({ items, position: i })
+            .then(() => {})
+            .catch((e) => {
+              store.addNotification({
+                title: "Some error occurred",
+                message: e.message,
+                type: "danger",
+                insert: "top",
+                animationIn: ["animated", "fadeIn"],
+                animationOut: ["animated", "fadeOut"],
+                container: "top-right",
+                dismiss: {
+                  duration: 5000,
+                  click: false,
+                },
+              });
+              return;
+            });
         }
 
         return newTiles;
