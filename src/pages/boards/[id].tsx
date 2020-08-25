@@ -48,6 +48,13 @@ const Board = (props: Props) => {
     }
   }, [props.user]);
 
+  useEffect(
+    () => () => {
+      document.body.style.backgroundImage = "none";
+    },
+    []
+  );
+
   const onDragEnd = (result: DropResult) => {
     const { destination, source, type } = result;
     if (!destination) {

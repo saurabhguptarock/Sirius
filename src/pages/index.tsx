@@ -27,11 +27,6 @@ const Home = (props) => {
   useEffect(() => {
     if (props.user) {
       getBoards(props.user.uid);
-      if (props.user.backgroundUrl)
-        document.body.style.backgroundImage = `url('${props.user.backgroundUrl}')`;
-      else
-        document.body.style.backgroundImage =
-          "url('/assets/images/background.jpg')";
     }
   }, [props.user]);
 

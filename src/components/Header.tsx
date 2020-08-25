@@ -4,8 +4,11 @@ import { login, logout } from "../store/actions/AuthAction";
 import FirebaseService from "../services";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useRouter } from "next/router";
 
 const Header = (props) => {
+  const router = useRouter();
+
   useEffect(() => {
     FirebaseService.auth.onAuthStateChanged((user) => {
       if (user) props.login(user.uid);
@@ -45,21 +48,46 @@ const Header = (props) => {
       <div id="navbarBasicExample" className="navbar-menu">
         <div className="navbar-start">
           <Link href="/add-products">
-            <a className="navbar-item main">Add Products</a>
+            <a
+              className={
+                router.pathname.split("/")[1] === "boards"
+                  ? "navbar-item main"
+                  : "navbar-item"
+              }
+            >
+              Add Products
+            </a>
           </Link>
           <Link href="/orders">
-            <a className="navbar-item main">Orders</a>
+            <a
+              className={
+                router.pathname.split("/")[1] === "boards"
+                  ? "navbar-item main"
+                  : "navbar-item"
+              }
+            >
+              Orders
+            </a>
           </Link>
         </div>
 
         <div className="navbar-end">
           {props.user && (
             <div className="navbar-item  has-dropdown is-hoverable">
-              <a className="navbar-item">
+              <a
+                className={
+                  router.pathname.split("/")[1] === "boards"
+                    ? "navbar-item main"
+                    : "navbar-item"
+                }
+              >
                 <i className="fas fa-user" style={{ fontSize: "1.3rem" }}></i>
               </a>
 
               <div className="navbar-dropdown">
+                <Link href="/user-profile">
+                  <a className="navbar-item">Profile</a>
+                </Link>
                 <a className="navbar-item" onClick={props.logout}>
                   Logout
                 </a>

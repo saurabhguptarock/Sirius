@@ -123,14 +123,21 @@ const SiriusActionButton = (props: Props) => {
           >
             {btnTitle}
           </button>
-          <i style={{ cursor: "pointer" }} className="fas fa-times ml-3"></i>
+          <i
+            style={{ cursor: "pointer" }}
+            onClick={closeForm}
+            className="fas fa-times ml-3"
+          ></i>
         </div>
       </div>
     );
   };
 
   const openForm = () => setFormOpen(true);
-  const closeForm = () => setFormOpen(false);
+  const closeForm = () => {
+    setFormOpen(false);
+    setText("");
+  };
 
   return formOpen ? renderForm() : renderAddButton();
 };
