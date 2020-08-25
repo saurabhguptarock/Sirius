@@ -67,6 +67,7 @@ const SiriusActionButton = (props: Props) => {
           borderRadius: "5px",
           height: 36,
           width: 272,
+          minWidth: 272,
           paddingLeft: 10,
         }}
       >

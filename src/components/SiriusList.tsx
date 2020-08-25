@@ -28,7 +28,11 @@ const SiriusList = (props: Props) => {
             type="item"
           >
             {(dropProvided) => (
-              <div ref={dropProvided.innerRef} {...dropProvided.droppableProps}>
+              <div
+                ref={dropProvided.innerRef}
+                {...dropProvided.droppableProps}
+                className="innerDraggable"
+              >
                 <h4 style={{ fontSize: "1.5rem", fontWeight: 600 }}>
                   {props.tile.title}
                 </h4>

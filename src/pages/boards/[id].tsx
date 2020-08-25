@@ -91,12 +91,14 @@ const Board = (props: Props) => {
                   />
                 ))}
               {provided.placeholder}
-              <SiriusActionButton
-                isTile={true}
-                userId={props.user?.uid}
-                boardId={id as string}
-                noOfTiles={props.tiles.length}
-              />
+              <div style={{ paddingRight: "50px" }}>
+                <SiriusActionButton
+                  isTile={true}
+                  userId={props.user?.uid}
+                  boardId={id as string}
+                  noOfTiles={props.tiles.length}
+                />
+              </div>
             </div>
           )}
         </Droppable>

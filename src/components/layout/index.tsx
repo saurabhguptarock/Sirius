@@ -9,7 +9,9 @@ const MainLayout = ({ children }) => (
     <ReactNotification />
     <div className="container">
       <Header />
-      {children}
+    </div>
+    <div style={{ paddingLeft: "50px" }}>{children}</div>
+    <div className="container">
       <Footer />
     </div>
   </div>
