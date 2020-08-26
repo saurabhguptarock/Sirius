@@ -9,6 +9,7 @@ interface Props {
   idx: number;
   boardId: string;
   userId: string;
+  setModalActive: Function;
 }
 
 const SiriusList = (props: Props) => {
@@ -37,7 +38,12 @@ const SiriusList = (props: Props) => {
                   {props.tile.title}
                 </h4>
                 {props.tile.items.map((item, i) => (
-                  <SiriusCard key={item.cardId} item={item} index={i} />
+                  <div
+                    style={{ cursor: "pointer" }}
+                    onClick={() => props.setModalActive(true)}
+                  >
+                    <SiriusCard key={item.cardId} item={item} index={i} />
+                  </div>
                 ))}
                 {dropProvided.placeholder}
                 <SiriusActionButton
