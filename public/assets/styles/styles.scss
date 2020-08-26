@@ -45,6 +45,11 @@ body {
   overflow-x: hidden;
 }
 
+.plus-hover-tile:hover {
+  background-color: rgba(10, 10, 10, 0.05);
+  cursor: pointer;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
