@@ -21,7 +21,8 @@ const Board = (props: Props) => {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [modalActive, setModalActive] = useState(true);
+  const [modalActive, setModalActive] = useState(false);
+  const [modalData, setModalData] = useState<Item>();
 
   const getTiles = async (uid: string, boardId: string) => {
     setLoading(true);
@@ -97,6 +98,7 @@ const Board = (props: Props) => {
                     userId={props.user?.uid}
                     boardId={id as string}
                     setModalActive={setModalActive}
+                    setModalData={setModalData}
                   />
                 ))}
               {provided.placeholder}
@@ -133,7 +135,7 @@ const Board = (props: Props) => {
               onClick={() => setModalActive(false)}
             ></button>
           </header>
-          <section className="modal-card-body"></section>
+          <section className="modal-card-body">{modalData.title}</section>
           <footer className="modal-card-foot">
             <button className="button is-success">Save changes</button>
             <button className="button" onClick={() => setModalActive(false)}>

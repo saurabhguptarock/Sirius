@@ -90,6 +90,15 @@ const Header = (props: Props) => {
                     : "navbar-item"
                 }
               >
+                <i className="fas fa-images" style={{ fontSize: "1.3rem" }}></i>
+              </a>
+              <a
+                className={
+                  router.pathname.split("/")[1] === "boards"
+                    ? "navbar-item main"
+                    : "navbar-item"
+                }
+              >
                 <i className="fas fa-bell" style={{ fontSize: "1.3rem" }}></i>
               </a>
               <a
