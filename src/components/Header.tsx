@@ -26,7 +26,7 @@ const Header = (props: Props) => {
 
   return (
     <nav
-      className="navbar is-transparent"
+      className="navbar is-transparent is-fixed-top-desktop"
       role="navigation"
       aria-label="main navigation"
     >

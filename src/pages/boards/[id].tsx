@@ -86,7 +86,8 @@ const Board = (props: Props) => {
             <div
               {...provided.droppableProps}
               ref={provided.innerRef}
-              className="columns mt-5"
+              className="columns"
+              style={{ marginTop: "4rem" }}
             >
               {!loading &&
                 props.tiles.length > 0 &&
