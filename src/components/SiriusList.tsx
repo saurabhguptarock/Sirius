@@ -22,7 +22,7 @@ const SiriusList = (props: Props) => {
           ref={dragProvided.innerRef}
           {...dragProvided.draggableProps}
           {...dragProvided.dragHandleProps}
-          className="draggableTile"
+          className="draggableTile mt-5"
         >
           <Droppable
             droppableId={props.tile.id}

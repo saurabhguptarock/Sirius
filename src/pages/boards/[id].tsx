@@ -22,7 +22,10 @@ const Board = (props: Props) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [modalActive, setModalActive] = useState(false);
-  const [modalData, setModalData] = useState<Item>();
+  const [modalData, setModalData] = useState<Item>({
+    title: "",
+    cardId: "",
+  });
 
   const getTiles = async (uid: string, boardId: string) => {
     setLoading(true);
@@ -76,7 +79,7 @@ const Board = (props: Props) => {
   };
 
   return (
-    <div>
+    <div style={{ marginTop: "4rem" }}>
       <Head>
         <title>Board | {id}</title>
       </Head>
@@ -87,7 +90,6 @@ const Board = (props: Props) => {
               {...provided.droppableProps}
               ref={provided.innerRef}
               className="columns"
-              style={{ marginTop: "4rem" }}
             >
               {!loading &&
                 props.tiles.length > 0 &&
