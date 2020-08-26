@@ -114,7 +114,14 @@ const Board = (props: Props) => {
       </DragDropContext>
       <div className={modalActive ? "modal is-active" : "modal"}>
         <div
-          className="modal-background"
+          style={{
+            backgroundColor: "rgba(0,0,0,0.5)",
+            left: 0,
+            bottom: 0,
+            position: "absolute",
+            right: 0,
+            top: 0,
+          }}
           onClick={() => setModalActive(false)}
         ></div>
         <div className="modal-card">
