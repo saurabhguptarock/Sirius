@@ -8,19 +8,22 @@ import SiriusList from "../../components/SiriusList";
 import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
 import SiriusActionButton from "../../components/SiriusActionButton";
 import { sortTile, addBoardToStore } from "../../store/actions/TileAction";
+import { setLoading, setError } from "../../store/actions/AppStateAction";
 
 interface Props {
   tiles: Tile[];
   user?: User;
   dispatch?: Function;
+  appState: {
+    isLoading: boolean;
+    error: string;
+  };
 }
 
 const Board = (props: Props) => {
   const router = useRouter();
   const { id } = router.query;
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
   const [modalActive, setModalActive] = useState(false);
 
   const [modalData, setModalData] = useState<Item>({
@@ -29,14 +32,14 @@ const Board = (props: Props) => {
   });
 
   const getTiles = async (uid: string, boardId: string) => {
-    setLoading(true);
+    props.dispatch(setLoading(true));
     await FirebaseService.getTiles(uid, boardId)
       .then((tiles) => {
         props.dispatch(addBoardToStore(tiles));
-        setLoading(false);
+        props.dispatch(setLoading(false));
       })
       .catch((e) => {
-        setLoading(false);
+        props.dispatch(setLoading(false));
         setError(e.message);
       });
   };
@@ -92,7 +95,7 @@ const Board = (props: Props) => {
               ref={provided.innerRef}
               className="columns"
             >
-              {!loading &&
+              {!props.appState.isLoading &&
                 props.tiles.length > 0 &&
                 props.tiles.map((tile: Tile, i) => (
                   <SiriusList
@@ -153,7 +156,11 @@ const Board = (props: Props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { user: state.auth.user, tiles: state.tiles };
+  return {
+    user: state.auth.user,
+    tiles: state.tiles,
+    appState: state.appState,
+  };
 };
 
 export default connect(mapStateToProps)(Board);

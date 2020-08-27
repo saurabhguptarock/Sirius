@@ -13,6 +13,10 @@ import { store } from "react-notifications-component";
 interface Props {
   user?: User;
   dispatch?: Function;
+  appState: {
+    isLoading: boolean;
+    error: string;
+  };
 }
 
 const Header = (props: Props) => {
@@ -93,6 +97,33 @@ const Header = (props: Props) => {
             <Link href="/settings">
               <a className="navbar-item main">
                 <i className="fas fa-cog" style={{ fontSize: "1.3rem" }}></i>
+              </a>
+            </Link>
+          </div>
+
+          <div className="navbar-item" style={{ padding: 0 }}>
+            <Link href="/">
+              <a className="navbar-item main">
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <img
+                    src={
+                      props.appState.isLoading
+                        ? "/assets/images/loader-animated.svg"
+                        : "/assets/images/loader-static.svg"
+                    }
+                    alt="Loader Static"
+                  />
+                  <span
+                    className="ml-2"
+                    style={{
+                      fontSize: "1.5rem",
+                      padding: 0,
+                      margin: 0,
+                    }}
+                  >
+                    Sirius
+                  </span>
+                </div>
               </a>
             </Link>
           </div>
@@ -227,7 +258,7 @@ const Header = (props: Props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { user: state.auth.user };
+  return { user: state.auth.user, appState: state.appState };
 };
 
 export default connect(mapStateToProps)(Header);

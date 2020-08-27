@@ -1,25 +1,33 @@
 import Head from "next/head";
 import React, { useState, useEffect } from "react";
-import { Board } from "../types";
+import { Board, User } from "../types";
 import { connect } from "react-redux";
 import FirebaseService from "../services";
 import Link from "next/link";
+import { setLoading, setError } from "../store/actions/AppStateAction";
 
-const Home = (props) => {
+interface Props {
+  user?: User;
+  appState: {
+    isLoading: boolean;
+    error: string;
+  };
+  dispatch?: Function;
+}
+
+const Home = (props: Props) => {
   const [boards, setBoards] = useState<Board[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
 
   const getBoards = async (uid: string) => {
-    setLoading(true);
+    props.dispatch(setLoading(true));
     await FirebaseService.getBoards(uid)
       .then((tiles) => {
         setBoards(tiles);
-        setLoading(false);
+        props.dispatch(setLoading(false));
       })
       .catch((e) => {
-        setLoading(false);
-        setError(e.message);
+        props.dispatch(setLoading(false));
+        props.dispatch(setError(e.message));
       });
   };
 
@@ -38,7 +46,7 @@ const Home = (props) => {
       </Head>
       <div className="container is-fluid">
         <div className="columns mt-5">
-          {!loading &&
+          {!props.appState.isLoading &&
             boards.length > 0 &&
             boards.map((board) => {
               return (
@@ -79,7 +87,7 @@ const Home = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { user: state.auth.user };
+  return { user: state.auth.user, appState: state.appState };
 };
 
 export default connect(mapStateToProps)(Home);

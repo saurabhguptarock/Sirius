@@ -1,6 +1,7 @@
 import thunk from "redux-thunk";
 import AuthReducer from "./reducers/AuthReducer";
 import TileReducer from "./reducers/TileReducer";
+import AppStateReducer from "./reducers/AppStateReducer";
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 
 const initialState = {};
@@ -11,6 +12,7 @@ declare let window: any;
 const RootReducer = combineReducers({
   auth: AuthReducer,
   tiles: TileReducer,
+  appState: AppStateReducer,
 });
 
 if (
