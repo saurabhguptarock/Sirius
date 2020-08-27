@@ -28,7 +28,8 @@ const Header = (props: Props) => {
     if (!boardName) return;
     const res = await FirebaseService.createBoard(props.user.uid, boardName);
     if (res) {
-      router.push(`/boards/${res.boardId}`);
+      setShowCreateBoard(false);
+      router.push("/boards/[id]", `/boards/${res.boardId}`);
       store.addNotification({
         title: "Some error occurred",
         message: "Board Created Successfully",

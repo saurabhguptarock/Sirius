@@ -52,7 +52,7 @@ const Board = (props: Props) => {
         document.body.style.backgroundImage =
           "url('/assets/images/background.jpg')";
     }
-  }, [props.user]);
+  }, [props.user, id]);
 
   useEffect(
     () => () => {
