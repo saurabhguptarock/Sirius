@@ -8,6 +8,7 @@ import { User } from "../types";
 import React from "react";
 import Popover from "react-tiny-popover";
 import AddIconPopover from "./AddIconPopover";
+import WallpaperPopover from "./WallpaperPopover";
 import { store } from "react-notifications-component";
 
 interface Props {
@@ -22,8 +23,7 @@ interface Props {
 const Header = (props: Props) => {
   const router = useRouter();
   const [plusPopoverOpen, setPlusPopoverOpen] = useState(false);
-  const [wallpaperPopover, setWallpaperPopover] = useState(false);
-  const [notificationPopover, setNotificationPopover] = useState(false);
+  const [wallpaperPopoverOpen, setWallpaperPopoverOpen] = useState(false);
 
   const [showCreateBoard, setShowCreateBoard] = useState(false);
   const [boardName, setBoardName] = useState("");
@@ -153,12 +153,31 @@ const Header = (props: Props) => {
                     ></i>
                   </a>
                 </Popover>
-                <a className="navbar-item main">
-                  <i
-                    className="fas fa-images"
-                    style={{ fontSize: "1.3rem" }}
-                  ></i>
-                </a>
+                <Popover
+                  isOpen={wallpaperPopoverOpen}
+                  position={"bottom"}
+                  onClickOutside={() =>
+                    setWallpaperPopoverOpen(!wallpaperPopoverOpen)
+                  }
+                  align={"start"}
+                  content={
+                    <WallpaperPopover
+                      setWallpaperPopoverOpen={setWallpaperPopoverOpen}
+                    />
+                  }
+                >
+                  <a
+                    className="navbar-item main"
+                    onClick={() =>
+                      setWallpaperPopoverOpen(!wallpaperPopoverOpen)
+                    }
+                  >
+                    <i
+                      className="fas fa-images"
+                      style={{ fontSize: "1.3rem" }}
+                    ></i>
+                  </a>
+                </Popover>
                 <a className="navbar-item main">
                   <i className="fas fa-bell" style={{ fontSize: "1.3rem" }}></i>
                 </a>

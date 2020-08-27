@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "axios": "^0.20.0",
     "bulma": "^0.9.0",
     "firebase": "^7.19.0",
     "framer-motion": "^2.6.0",
