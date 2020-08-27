@@ -103,7 +103,7 @@ const Header = (props: Props) => {
 
           <div className="navbar-item" style={{ padding: 0 }}>
             <Link href="/">
-              <a className="navbar-item main">
+              <a className="navbar-item main" style={{ padding: 0 }}>
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <img
                     src={
@@ -116,7 +116,7 @@ const Header = (props: Props) => {
                   <span
                     className="ml-2"
                     style={{
-                      fontSize: "1.5rem",
+                      fontSize: "1.8rem",
                       padding: 0,
                       margin: 0,
                     }}
