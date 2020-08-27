@@ -21,6 +21,9 @@ const SiriusCard = (props: Props) => {
             className="card"
             style={{
               borderRadius: "3px",
+              boxShadow: "0 1.5px 1.5px 0 rgba(0, 0, 0, 0.2)",
+              minWidth: 270,
+              maxWidth: 270,
             }}
           >
             <div

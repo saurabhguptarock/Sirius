@@ -16,6 +16,9 @@ interface Props {
 const SiriusList = (props: Props) => {
   return (
     // TODO : change to only drag if grabbed from title
+    // <div className="draggableTile">
+
+    // </div>
     <Draggable draggableId={props.tile.id} index={props.idx}>
       {(dragProvided) => (
         <div
@@ -24,6 +27,9 @@ const SiriusList = (props: Props) => {
           {...dragProvided.dragHandleProps}
           className="draggableTile mt-5"
         >
+          <h4 style={{ fontSize: "1.5rem", fontWeight: 600 }}>
+            {props.tile.title}
+          </h4>
           <Droppable
             droppableId={props.tile.id}
             direction="vertical"
@@ -35,9 +41,6 @@ const SiriusList = (props: Props) => {
                 {...dropProvided.droppableProps}
                 className="innerDraggable"
               >
-                <h4 style={{ fontSize: "1.5rem", fontWeight: 600 }}>
-                  {props.tile.title}
-                </h4>
                 {props.tile.items.map((item, i) => (
                   <div
                     style={{ cursor: "pointer" }}
