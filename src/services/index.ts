@@ -254,6 +254,62 @@ class FirebaseAuthService {
       });
   };
 
+  createBoard = async (userId: string, boardName: string): Promise<Board> => {
+    const lastUpdatedAt = new Date();
+    const createdAt = new Date();
+
+    return this.firestore
+      .collection(`users/${userId}/boards`)
+      .add({
+        boardId: "",
+        name: boardName,
+        createdAt,
+        lastUpdatedAt,
+      })
+      .then(async (data) =>
+        data
+          .update({ boardId: data.id })
+          .then(() => ({
+            boardId: data.id,
+            name: boardName,
+            createdAt,
+            lastUpdatedAt,
+          }))
+          .catch((e) => {
+            store.addNotification({
+              title: "Some error occurred",
+              message: e.message,
+              type: "danger",
+              insert: "top",
+              animationIn: ["animated", "fadeIn"],
+              animationOut: ["animated", "fadeOut"],
+              container: "top-right",
+              dismiss: {
+                duration: 5000,
+                click: false,
+              },
+            });
+            return null;
+          })
+      )
+      .catch((e) => {
+        store.addNotification({
+          title: "Some error occurred",
+          message: e.message,
+          type: "danger",
+          insert: "top",
+          animationIn: ["animated", "fadeIn"],
+          animationOut: ["animated", "fadeOut"],
+          container: "top-right",
+          dismiss: {
+            duration: 5000,
+            click: false,
+          },
+        });
+        return null;
+      });
+  };
+
   signOut = () => {
     return this.auth.signOut();
   };

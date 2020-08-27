@@ -45,7 +45,7 @@ const Home = (props) => {
                 <div className="column is-3" key={board.boardId}>
                   <Link href="/boards/[id]" as={`/boards/${board.boardId}`}>
                     <a>
-                      <div className="card" style={{ borderRadius: "3px" }}>
+                      <div className="card" style={{ borderRadius: "5px" }}>
                         <div className="card-image">
                           <figure
                             className="image is-16by9"
@@ -53,7 +53,7 @@ const Home = (props) => {
                           >
                             <img
                               src="/assets/images/background.jpg"
-                              style={{ borderRadius: "3px" }}
+                              style={{ borderRadius: "5px" }}
                               alt="Placeholder image"
                             />
                           </figure>

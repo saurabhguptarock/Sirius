@@ -22,6 +22,7 @@ const Board = (props: Props) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [modalActive, setModalActive] = useState(false);
+
   const [modalData, setModalData] = useState<Item>({
     title: "",
     cardId: "",
@@ -105,7 +106,7 @@ const Board = (props: Props) => {
                   />
                 ))}
               {provided.placeholder}
-              <div style={{ paddingRight: "50px" }}>
+              <div style={{ paddingRight: "50px" }} className="mt-5">
                 <SiriusActionButton
                   isTile={true}
                   userId={props.user?.uid}
