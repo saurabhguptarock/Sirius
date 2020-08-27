@@ -16,9 +16,7 @@ interface Props {
 const SiriusList = (props: Props) => {
   return (
     // TODO : change to only drag if grabbed from title
-    // <div className="draggableTile">
 
-    // </div>
     <Draggable draggableId={props.tile.id} index={props.idx}>
       {(dragProvided) => (
         <div
