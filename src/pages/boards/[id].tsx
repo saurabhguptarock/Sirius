@@ -19,7 +19,7 @@ interface Props {
     error: string;
   };
 }
-
+// TODO:update recent board on new board click
 const Board = (props: Props) => {
   const router = useRouter();
   const { id } = router.query;
@@ -49,11 +49,12 @@ const Board = (props: Props) => {
       router.push("/login");
     } else {
       getTiles(props.user.uid, id as string);
-      if (props.user.backgroundUrl)
-        document.body.style.backgroundImage = `url('${props.user.backgroundUrl}')`;
-      else
-        document.body.style.backgroundImage =
-          "url('/assets/images/background.jpg')";
+      if (props.user.recentBoard?.backgroundUrl) {
+        document.body.style.backgroundImage = `url('${props.user.recentBoard?.backgroundUrl}')`;
+        document.body.style.objectFit = "cover";
+        document.body.style.backgroundPosition = "center";
+        document.body.style.backgroundRepeat = "no-repeat";
+      }
     }
   }, [props.user, id]);
 

@@ -2,14 +2,14 @@ export interface User {
   name: string;
   uid: string;
   email: string;
-  backgroundUrl: string;
-  recentBoard: string;
+  recentBoard?: Board;
 }
 export interface Board {
   boardId: string;
   name: string;
   createdAt: Date;
   lastUpdatedAt: Date;
+  backgroundUrl: string;
 }
 
 export interface Tile {
@@ -22,4 +22,28 @@ export interface Tile {
 export interface Item {
   title: string;
   cardId: string;
+}
+export interface Wallpaper {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  promoted_at: string;
+  width: number;
+  height: number;
+  color: string;
+  description?: null;
+  alt_description: string;
+  urls: Urls;
+  categories?: null[] | null;
+  likes: number;
+  liked_by_user: boolean;
+  current_user_collections?: null[] | null;
+  sponsorship?: null;
+}
+export interface Urls {
+  raw: string;
+  full: string;
+  regular: string;
+  small: string;
+  thumb: string;
 }

@@ -75,8 +75,6 @@ class FirebaseAuthService {
                 uid: firebaseUser.uid,
                 email: firebaseUser.email,
                 name: firebaseUser.displayName,
-                recentBoard: "",
-                backgroundUrl: "",
               })
                 .then(() => {
                   return {
@@ -174,13 +172,12 @@ class FirebaseAuthService {
       .doc(docId)
       .get()
       .then((data) => {
-        const { email, name, uid, backgroundUrl, recentBoard } = data.data();
+        const { email, name, uid, recentBoard } = data.data();
 
         return {
           email,
           name,
           uid,
-          backgroundUrl,
           recentBoard,
         } as User;
       })
@@ -307,6 +304,35 @@ class FirebaseAuthService {
           },
         });
         return null;
+      });
+  };
+
+  updatedBoardUrl = async (
+    userId: string,
+    boardId: string,
+    backgroundUrl: string
+  ): Promise<boolean> => {
+    return this.firestore
+      .doc(`users/${userId}/boards/${boardId}`)
+      .update({
+        backgroundUrl,
+      })
+      .then(() => true)
+      .catch((e) => {
+        store.addNotification({
+          title: "Some error occurred",
+          message: e.message,
+          type: "danger",
+          insert: "top",
+          animationIn: ["animated", "fadeIn"],
+          animationOut: ["animated", "fadeOut"],
+          container: "top-right",
+          dismiss: {
+            duration: 5000,
+            click: false,
+          },
+        });
+        return false;
       });
   };
 
