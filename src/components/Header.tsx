@@ -57,6 +57,12 @@ const Header = (props: Props) => {
         props.dispatch(login(userData));
       }
     });
+    if (props.user)
+      FirebaseService.firestore
+        .doc(`users/${props.user.uid}`)
+        .onSnapshot((snap) => {
+          props.dispatch(login(snap.data() as User));
+        });
   }, []);
 
   return (

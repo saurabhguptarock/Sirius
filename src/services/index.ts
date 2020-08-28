@@ -336,6 +336,34 @@ class FirebaseAuthService {
       });
   };
 
+  updateRecentBoard = async (
+    userId: string,
+    recentBoard: Board
+  ): Promise<boolean> => {
+    return this.firestore
+      .doc(`users/${userId}`)
+      .update({
+        recentBoard,
+      })
+      .then(() => true)
+      .catch((e) => {
+        store.addNotification({
+          title: "Some error occurred",
+          message: e.message,
+          type: "danger",
+          insert: "top",
+          animationIn: ["animated", "fadeIn"],
+          animationOut: ["animated", "fadeOut"],
+          container: "top-right",
+          dismiss: {
+            duration: 5000,
+            click: false,
+          },
+        });
+        return false;
+      });
+  };
+
   signOut = () => {
     return this.auth.signOut();
   };

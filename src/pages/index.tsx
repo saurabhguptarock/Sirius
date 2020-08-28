@@ -50,7 +50,13 @@ const Home = (props: Props) => {
             boards.length > 0 &&
             boards.map((board) => {
               return (
-                <div className="column is-3" key={board.boardId}>
+                <div
+                  className="column is-3"
+                  key={board.boardId}
+                  onClick={(e) =>
+                    FirebaseService.updateRecentBoard(props.user.uid, board)
+                  }
+                >
                   <Link href="/boards/[id]" as={`/boards/${board.boardId}`}>
                     <a>
                       <div className="card" style={{ borderRadius: "5px" }}>

@@ -3,11 +3,13 @@ import axios from "axios";
 import { store } from "react-notifications-component";
 import { connect } from "react-redux";
 import { User, Wallpaper } from "../types";
+import { login } from "../store/actions/AuthAction";
 import FirebaseService from "../services";
 
 interface Props {
   setWallpaperPopoverOpen: Function;
   user?: User;
+  dispatch?: Function;
 }
 
 const WallpaperPopover = (props: Props) => {
@@ -56,7 +58,23 @@ const WallpaperPopover = (props: Props) => {
       props.user.recentBoard.boardId,
       wallpapers[idx].urls.full
     );
-    if (res) props.setWallpaperPopoverOpen(false);
+    if (res) {
+      props.setWallpaperPopoverOpen(false);
+      props.dispatch(
+        login({
+          email: props.user.email,
+          name: props.user.name,
+          uid: props.user.uid,
+          recentBoard: {
+            backgroundUrl: wallpapers[idx].urls.full,
+            boardId: props.user.recentBoard.boardId,
+            createdAt: props.user.recentBoard.createdAt,
+            lastUpdatedAt: props.user.recentBoard.lastUpdatedAt,
+            name: props.user.recentBoard.name,
+          },
+        })
+      );
+    }
   };
 
   return (
