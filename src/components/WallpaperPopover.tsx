@@ -15,13 +15,13 @@ interface Props {
 const WallpaperPopover = (props: Props) => {
   const [wallpapers, setWallpapers] = useState<Wallpaper[]>([]);
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
+  const [query, setQuery] = useState("backgrounds");
 
   const fetchWallpapers = async () => {
     setLoading(true);
     const data: Wallpaper[] = await axios
       .get(
-        `https://api.unsplash.com/search/photos/?page=${page}&per_page=30&query=backgrounds&orientation=landscape&client_id=${process.env.NEXT_PUBLIC_UNSPLASH_KEY}`
+        `https://api.unsplash.com/search/photos/?per_page=30&query=${query}&orientation=landscape&client_id=${process.env.NEXT_PUBLIC_UNSPLASH_KEY}`
       )
       .then((data) => {
         setLoading(false);
@@ -44,12 +44,12 @@ const WallpaperPopover = (props: Props) => {
         });
         return null;
       });
-    if (data) setWallpapers((wall) => [...wall, ...data]);
+    if (data) setWallpapers(data);
   };
 
   useEffect(() => {
     fetchWallpapers();
-  }, [page]);
+  }, [query]);
 
   const handleBackgroundUrlUpdate = async (idx: number) => {
     const res = await FirebaseService.updatedBoardUrl(
@@ -88,16 +88,27 @@ const WallpaperPopover = (props: Props) => {
           ></button>
         </a>
       </header>
+      <div className="py-2 px-2">
+        <input
+          type="text"
+          className="input"
+          placeholder="Search Wallpapers"
+          onChange={(e) => {
+            if (e.target.value != "") setQuery(e.target.value);
+            else setQuery("backgrounds");
+          }}
+        />
+      </div>
       <div
         style={{
           backgroundColor: "transparent",
           width: "350px",
-          maxHeight: "80vh",
-          minHeight: "80vh",
+          maxHeight: "75vh",
+          minHeight: "75vh",
           overflowY: "auto",
         }}
       >
-        <div className="grid-wallpaper pr-2 pt-2">
+        <div className="grid-wallpaper pr-2">
           {!loading &&
             wallpapers.length > 0 &&
             wallpapers.map((wallpaper, i) => (
