@@ -3,6 +3,7 @@ import axios from "axios";
 import { store } from "react-notifications-component";
 import { connect } from "react-redux";
 import { User, Wallpaper } from "../types";
+import FirebaseService from "../services";
 
 interface Props {
   setWallpaperPopoverOpen: Function;
@@ -43,15 +44,19 @@ const WallpaperPopover = (props: Props) => {
         return null;
       });
     if (data) setWallpapers(data);
-    console.log(data[2].urls.full);
   };
 
   useEffect(() => {
     fetchWallpapers();
   }, []);
 
-  const handleBackgroundUrlUpdate = (idx: number) => {
-    props.setWallpaperPopoverOpen(false);
+  const handleBackgroundUrlUpdate = async (idx: number) => {
+    const res = await FirebaseService.updatedBoardUrl(
+      props.user.uid,
+      props.user.recentBoard.boardId,
+      wallpapers[idx].urls.full
+    );
+    if (res) props.setWallpaperPopoverOpen(false);
   };
 
   return (

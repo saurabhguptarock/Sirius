@@ -60,7 +60,7 @@ const Home = (props: Props) => {
                             style={{ position: "relative" }}
                           >
                             <img
-                              src="/assets/images/background.jpg"
+                              src={board.backgroundUrl}
                               style={{ borderRadius: "5px" }}
                               alt="Placeholder image"
                             />
