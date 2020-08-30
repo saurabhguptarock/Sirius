@@ -9,6 +9,7 @@ import React from "react";
 import Popover from "react-tiny-popover";
 import AddIconPopover from "./AddIconPopover";
 import WallpaperPopover from "./WallpaperPopover";
+import NotificationPopover from "./NotificationPopover";
 import { store } from "react-notifications-component";
 
 interface Props {
@@ -24,6 +25,7 @@ const Header = (props: Props) => {
   const router = useRouter();
   const [plusPopoverOpen, setPlusPopoverOpen] = useState(false);
   const [wallpaperPopoverOpen, setWallpaperPopoverOpen] = useState(false);
+  const [notificationPopoverOpen, setNotificationPopoverOpen] = useState(false);
 
   const [showCreateBoard, setShowCreateBoard] = useState(false);
   const [boardName, setBoardName] = useState("");
@@ -184,9 +186,31 @@ const Header = (props: Props) => {
                     ></i>
                   </a>
                 </Popover>
-                <a className="navbar-item main">
-                  <i className="fas fa-bell" style={{ fontSize: "1.3rem" }}></i>
-                </a>
+                <Popover
+                  isOpen={notificationPopoverOpen}
+                  position={"bottom"}
+                  onClickOutside={() =>
+                    setNotificationPopoverOpen(!notificationPopoverOpen)
+                  }
+                  align={"start"}
+                  content={
+                    <NotificationPopover
+                      setNotificationPopoverOpen={setNotificationPopoverOpen}
+                    />
+                  }
+                >
+                  <a
+                    className="navbar-item main"
+                    onClick={() =>
+                      setNotificationPopoverOpen(!notificationPopoverOpen)
+                    }
+                  >
+                    <i
+                      className="fas fa-bell"
+                      style={{ fontSize: "1.3rem" }}
+                    ></i>
+                  </a>
+                </Popover>
                 <Link href="/user-profile">
                   <a className="navbar-item main">
                     <i
@@ -212,24 +236,20 @@ const Header = (props: Props) => {
             ;
             {!props.user && (
               <div className="navbar-item">
-                <div className="buttons">
-                  <Link href="/login">
-                    <a className="button is-primary">
-                      <strong>Log in</strong>
-                    </a>
-                  </Link>
-                </div>
+                <Link href="/login">
+                  <a className="button is-primary" style={{ height: "37px" }}>
+                    <strong>Log in</strong>
+                  </a>
+                </Link>
               </div>
             )}
             {!props.user && (
               <div className="navbar-item">
-                <div className="buttons">
-                  <Link href="/register">
-                    <a className="button is-primary">
-                      <strong>Sign up</strong>
-                    </a>
-                  </Link>
-                </div>
+                <Link href="/register">
+                  <a className="button is-primary" style={{ height: "37px" }}>
+                    <strong>Sign up</strong>
+                  </a>
+                </Link>
               </div>
             )}
           </div>
