@@ -4,6 +4,11 @@ export interface User {
   email: string;
   recentBoard?: Board;
 }
+
+export interface Notification {
+  createdAt: Date;
+  id: string;
+}
 export interface Board {
   boardId: string;
   name: string;

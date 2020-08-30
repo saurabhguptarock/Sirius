@@ -11,6 +11,8 @@ import AddIconPopover from "./AddIconPopover";
 import WallpaperPopover from "./WallpaperPopover";
 import NotificationPopover from "./NotificationPopover";
 import { store } from "react-notifications-component";
+import { Notification } from "../types";
+import { objectIsEquivalent } from "../helpers";
 
 interface Props {
   user?: User;
@@ -29,6 +31,7 @@ const Header = (props: Props) => {
 
   const [showCreateBoard, setShowCreateBoard] = useState(false);
   const [boardName, setBoardName] = useState("");
+  const [notifications, setNotifications] = useState<Notification[]>([]);
 
   const handleCreateBoard = async () => {
     if (!boardName) return;
@@ -57,15 +60,40 @@ const Header = (props: Props) => {
       if (user) {
         const userData = await FirebaseService.getUserData(user.uid);
         props.dispatch(login(userData));
+      } else {
+        props.dispatch(logout());
       }
     });
-    if (props.user)
-      FirebaseService.firestore
+    if (props.user) {
+      const snap = FirebaseService.firestore
         .doc(`users/${props.user.uid}`)
         .onSnapshot((snap) => {
-          props.dispatch(login(snap.data() as User));
+          if (!objectIsEquivalent(props.user, snap.data()))
+            props.dispatch(login(snap.data() as User));
         });
+      return () => snap();
+    }
   }, []);
+
+  useEffect(() => {
+    if (props.user) {
+      const snap = FirebaseService.firestore
+        .collection(`users/${props.user.uid}/notifications`)
+        .orderBy("createdAt")
+        .onSnapshot((snap) => {
+          if (
+            !objectIsEquivalent(
+              notifications,
+              snap.docs.map((doc) => doc.data())
+            )
+          )
+            setNotifications(
+              snap.docs.map((doc) => doc.data() as Notification)
+            );
+        });
+      return () => snap();
+    }
+  }, [props.user, setNotifications]);
 
   return (
     <div>
@@ -196,6 +224,7 @@ const Header = (props: Props) => {
                   content={
                     <NotificationPopover
                       setNotificationPopoverOpen={setNotificationPopoverOpen}
+                      notifications={notifications}
                     />
                   }
                 >
