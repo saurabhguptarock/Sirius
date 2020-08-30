@@ -13,6 +13,7 @@ import NotificationPopover from "./NotificationPopover";
 import { store } from "react-notifications-component";
 import { Notification } from "../types";
 import { objectIsEquivalent } from "../helpers";
+import Notifier from "react-desktop-notification";
 
 interface Props {
   user?: User;
@@ -53,6 +54,15 @@ const Header = (props: Props) => {
         },
       });
     }
+  };
+
+  const handleRequestNotification = () => {
+    Notifier.start(
+      "Title",
+      "Here is context",
+      "www.google.com",
+      "validated image url"
+    );
   };
 
   useEffect(() => {
@@ -230,14 +240,36 @@ const Header = (props: Props) => {
                 >
                   <a
                     className="navbar-item main"
-                    onClick={() =>
-                      setNotificationPopoverOpen(!notificationPopoverOpen)
-                    }
+                    onClick={() => {
+                      setNotificationPopoverOpen(!notificationPopoverOpen);
+                      handleRequestNotification();
+                    }}
                   >
                     <i
                       className="fas fa-bell"
-                      style={{ fontSize: "1.3rem" }}
-                    ></i>
+                      style={{ fontSize: "1.3rem", position: "relative" }}
+                    >
+                      {notifications.filter((not) => !not.markedAsRead).length >
+                        0 && (
+                        <span
+                          style={{
+                            position: "absolute",
+                            top: "-8px",
+                            right: "-10px",
+                            padding: "2px 6px",
+                            borderRadius: "50%",
+                            background: "#E90C59",
+                            color: "white",
+                            fontSize: "14px",
+                          }}
+                        >
+                          {
+                            notifications.filter((not) => !not.markedAsRead)
+                              .length
+                          }
+                        </span>
+                      )}
+                    </i>
                   </a>
                 </Popover>
                 <Link href="/user-profile">

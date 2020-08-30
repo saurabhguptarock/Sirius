@@ -8,6 +8,8 @@ export interface User {
 export interface Notification {
   createdAt: Date;
   id: string;
+  title: string;
+  markedAsRead: boolean;
 }
 export interface Board {
   boardId: string;

@@ -17,6 +17,7 @@
     "nprogress": "^0.2.0",
     "react": "16.13.1",
     "react-beautiful-dnd": "^13.0.0",
+    "react-desktop-notification": "^1.0.9",
     "react-dom": "16.13.1",
     "react-notifications-component": "^2.4.0",
     "react-redux": "^7.2.1",

@@ -60,11 +60,11 @@ const Board = (props: Props) => {
   }, [props.user, id]);
 
   useEffect(() => {
-    document.body.style.backgroundImage = `url('${props.user.recentBoard?.backgroundUrl}')`;
+    document.body.style.backgroundImage = `url('${props.user?.recentBoard?.backgroundUrl}')`;
     document.body.style.objectFit = "cover";
     document.body.style.backgroundPosition = "center";
     document.body.style.backgroundRepeat = "no-repeat";
-  }, [props.user.recentBoard, props.user.recentBoard?.backgroundUrl]);
+  }, [props.user?.recentBoard, props.user?.recentBoard?.backgroundUrl]);
 
   const onDragEnd = (result: DropResult) => {
     const { destination, source, type } = result;

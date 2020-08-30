@@ -63,6 +63,10 @@ body {
   grid-template-rows: auto;
 }
 
+.markAllAsRead:hover {
+  color: hsl(217, 71%, 53%);
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }

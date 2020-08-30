@@ -21,19 +21,35 @@ const NotificationPopover = (props: Props) => {
       </header>
       <div
         style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          padding: "0.5rem",
+        }}
+      >
+        <span
+          className="markAllAsRead"
+          style={{
+            cursor: "pointer",
+          }}
+        >
+          Mark All as Read
+        </span>
+      </div>
+      <div
+        style={{
           backgroundColor: "transparent",
           width: "400px",
           maxHeight: "75vh",
           overflowY: "auto",
+          padding: "0.5rem",
         }}
       >
-        {props.notifications.length > 0 &&
-          props.notifications.map((notification) => (
-            <div key={notification.id}>
-              {/* @ts-ignore */}
-              {notification.createdAt.toDate().toString()}
-            </div>
-          ))}
+        {props.notifications.filter((not) => !not.markedAsRead).length > 0 &&
+          props.notifications
+            .filter((not) => !not.markedAsRead)
+            .map((notification) => (
+              <div key={notification.id}>{notification.title}</div>
+            ))}
       </div>
     </div>
   );
