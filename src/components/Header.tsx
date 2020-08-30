@@ -13,7 +13,6 @@ import NotificationPopover from "./NotificationPopover";
 import { store } from "react-notifications-component";
 import { Notification } from "../types";
 import { objectIsEquivalent } from "../helpers";
-import Notifier from "react-desktop-notification";
 
 interface Props {
   user?: User;
@@ -56,13 +55,14 @@ const Header = (props: Props) => {
     }
   };
 
-  const handleRequestNotification = () => {
-    Notifier.start(
-      "Title",
-      "Here is context",
-      "www.google.com",
-      "validated image url"
-    );
+  const handleRequestNotification = async (notification: Notification) => {
+    if (window.Notification.permission === "default") {
+      await window.Notification.requestPermission();
+    } else if (window.Notification.permission === "granted") {
+      new window.Notification("Sirius", {
+        image: "/assets/images/loader-static.svg",
+      });
+    }
   };
 
   useEffect(() => {
@@ -96,10 +96,12 @@ const Header = (props: Props) => {
               notifications,
               snap.docs.map((doc) => doc.data())
             )
-          )
+          ) {
             setNotifications(
               snap.docs.map((doc) => doc.data() as Notification)
             );
+            handleRequestNotification(snap.docs[0].data() as Notification);
+          }
         });
       return () => snap();
     }
@@ -240,10 +242,9 @@ const Header = (props: Props) => {
                 >
                   <a
                     className="navbar-item main"
-                    onClick={() => {
-                      setNotificationPopoverOpen(!notificationPopoverOpen);
-                      handleRequestNotification();
-                    }}
+                    onClick={() =>
+                      setNotificationPopoverOpen(!notificationPopoverOpen)
+                    }
                   >
                     <i
                       className="fas fa-bell"
