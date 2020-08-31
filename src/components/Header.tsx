@@ -59,9 +59,9 @@ const Header = (props: Props) => {
     if (window.Notification.permission === "default") {
       await window.Notification.requestPermission();
     } else if (window.Notification.permission === "granted") {
-      new window.Notification("Sirius", {
-        image: "/assets/images/loader-static.svg",
-      });
+      // new window.Notification("Sirius", {
+      //   image: "/assets/images/loader-static.svg",
+      // });
     }
   };
 
@@ -273,7 +273,7 @@ const Header = (props: Props) => {
                     </i>
                   </a>
                 </Popover>
-                <Link href="/user-profile">
+                <Link href="/users/[uid]" as={`/users/${props.user.uid}`}>
                   <a className="navbar-item main">
                     <i
                       className="fas fa-user"
