@@ -1,7 +1,17 @@
-import React from "react";
+import Head from "next/head";
+import React, { useState } from "react";
+import { Template } from "../../../../types";
 
 const Templates = () => {
-  return <div>template</div>;
+  const [template, setTemplate] = useState<Template>({ name: "" });
+
+  return (
+    <div>
+      <Head>
+        <title>Template | {template.name}</title>
+      </Head>
+    </div>
+  );
 };
 
 export default Templates;

@@ -19,6 +19,10 @@ export interface Board {
   backgroundUrl: string;
 }
 
+export interface Template {
+  name: string;
+}
+
 export interface Tile {
   id: string;
   position: number;
