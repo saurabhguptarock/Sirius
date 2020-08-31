@@ -120,33 +120,23 @@ const Header = (props: Props) => {
               : "#026AA7",
         }}
       >
-        <div className="navbar-brand">
-          <Link href="/">
-            <a className="navbar-item main">
-              <i className="fas fa-home" style={{ fontSize: "1.3rem" }}></i>
-            </a>
-          </Link>
-
-          <a
-            role="button"
-            className="navbar-burger burger"
-            aria-label="menu"
-            aria-expanded="false"
-            data-target="navbarBasicExample"
-          >
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
-        </div>
-
-        <div id="navbarBasicExample" className="navbar-menu">
+        <div className="navbar-menu">
           <div className="navbar-start">
-            <Link href="/settings">
+            <Link href="/">
               <a className="navbar-item main">
-                <i className="fas fa-cog" style={{ fontSize: "1.3rem" }}></i>
+                <i className="fas fa-home" style={{ fontSize: "1.3rem" }}></i>
               </a>
             </Link>
+            {props.user && (
+              <Link
+                href="/users/[uid]/settings"
+                as={`/users/${props.user.uid}/settings`}
+              >
+                <a className="navbar-item main">
+                  <i className="fas fa-cog" style={{ fontSize: "1.3rem" }}></i>
+                </a>
+              </Link>
+            )}
           </div>
 
           <div className="navbar-item" style={{ padding: 0 }}>
