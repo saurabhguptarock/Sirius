@@ -1,9 +1,9 @@
 import Head from "next/head";
 import React, { useState } from "react";
-import { Template } from "../../../../types";
+import { Template as TypeTemplate } from "../../../../types";
 
-const Templates = () => {
-  const [template, setTemplate] = useState<Template>({ name: "" });
+const Template = () => {
+  const [template, setTemplate] = useState<TypeTemplate>();
 
   return (
     <div>
@@ -14,4 +14,4 @@ const Templates = () => {
   );
 };
 
-export default Templates;
+export default Template;

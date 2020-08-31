@@ -21,6 +21,15 @@ export interface Board {
 
 export interface Template {
   name: string;
+  id: string;
+  uid: string;
+  userName: string;
+  imgUrl: string;
+  description: string;
+  likes: number;
+  usage: number;
+  category: "Business" | "Design" | "Engineering" | "Sales" | "Support";
+  tiles: Tile[];
 }
 
 export interface Tile {

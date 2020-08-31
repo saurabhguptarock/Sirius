@@ -2,7 +2,7 @@ import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
 import firebase from "firebase/app";
-import { User, Board, Tile } from "../types";
+import { User, Board, Tile, Template } from "../types";
 import { store } from "react-notifications-component";
 
 class FirebaseAuthService {
@@ -361,6 +361,57 @@ class FirebaseAuthService {
           },
         });
         return false;
+      });
+  };
+
+  getMyTemplates = async (userId: string): Promise<Template[]> => {
+    return this.firestore
+      .collection("templates")
+      .where("uid", "==", userId)
+      .get()
+      .then((data) => data.docs.map((doc) => doc.data()))
+      .catch((e) => {
+        store.addNotification({
+          title: "Some error occurred",
+          message: e.message,
+          type: "danger",
+          insert: "top",
+          animationIn: ["animated", "fadeIn"],
+          animationOut: ["animated", "fadeOut"],
+          container: "top-right",
+          dismiss: {
+            duration: 5000,
+            click: false,
+          },
+        });
+        return null;
+      });
+  };
+
+  getAllTemplates = async (
+    category: "Business" | "Design" | "Engineering" | "Sales" | "Support"
+  ): Promise<Template[]> => {
+    return this.firestore
+      .collection("templates")
+      .where("category", "==", category)
+      .limit(50)
+      .get()
+      .then((data) => data.docs.map((doc) => doc.data()))
+      .catch((e) => {
+        store.addNotification({
+          title: "Some error occurred",
+          message: e.message,
+          type: "danger",
+          insert: "top",
+          animationIn: ["animated", "fadeIn"],
+          animationOut: ["animated", "fadeOut"],
+          container: "top-right",
+          dismiss: {
+            duration: 5000,
+            click: false,
+          },
+        });
+        return null;
       });
   };
 
