@@ -3,6 +3,7 @@ import { Template, User } from "../types";
 import FirebaseService from "../services";
 import { connect } from "react-redux";
 import { setLoading } from "../store/actions/AppStateAction";
+import Head from "next/head";
 
 interface Props {
   user: User;
@@ -30,6 +31,9 @@ const Templates = (props: Props) => {
 
   return (
     <div>
+      <Head>
+        <title>Templates | Sirius</title>
+      </Head>
       {templates.length > 0 &&
         !props.appState.isLoading &&
         templates.map((template) => (
