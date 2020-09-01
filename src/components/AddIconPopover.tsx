@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import router from "next/router";
 
 interface Props {
   setPlusPopoverOpen: Function;
@@ -57,7 +58,13 @@ const AddIconPopover = (props: Props) => {
             projects, track information, or organize anything.
           </p>
         </div>
-        <div className="plus-hover-tile mt-2 px-3 py-2">
+        <div
+          className="plus-hover-tile mt-2 px-3 py-2"
+          onClick={() => {
+            props.setPlusPopoverOpen(false);
+            router.push("/templates");
+          }}
+        >
           <div style={{ display: "flex" }}>
             <i className="fas fa-meteor">
               <span

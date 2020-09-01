@@ -85,7 +85,7 @@ const Board = (props: Props) => {
   };
 
   return (
-    <div style={{ marginTop: "4rem" }}>
+    <div>
       <Head>
         <title>Board | {id}</title>
       </Head>

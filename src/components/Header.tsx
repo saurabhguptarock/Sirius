@@ -191,6 +191,7 @@ const Header = (props: Props) => {
                     ></i>
                   </a>
                 </Popover>
+                {/* TODO: Remove this when not in board */}
                 <Popover
                   isOpen={wallpaperPopoverOpen}
                   position={"bottom"}

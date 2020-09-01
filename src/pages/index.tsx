@@ -40,7 +40,7 @@ const Home = (props: Props) => {
   }, [props.user]);
 
   return (
-    <div style={{ marginTop: "4rem" }}>
+    <div>
       <Head>
         <title>Boards | Sirius </title>
       </Head>

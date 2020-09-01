@@ -5,7 +5,7 @@ const MainLayout = ({ children }) => (
   <div>
     <ReactNotification />
     <Header />
-    <div style={{ paddingLeft: "50px" }}>{children}</div>
+    <div style={{ paddingLeft: "50px", marginTop: "4rem" }}>{children}</div>
   </div>
 );
 
