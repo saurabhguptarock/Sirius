@@ -8,7 +8,7 @@ const Template = () => {
   return (
     <div>
       <Head>
-        <title>Template | {template.name}</title>
+        <title>Template | {template?.name}</title>
       </Head>
     </div>
   );

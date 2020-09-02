@@ -75,6 +75,7 @@ class FirebaseAuthService {
                 uid: firebaseUser.uid,
                 email: firebaseUser.email,
                 name: firebaseUser.displayName,
+                userImg: firebaseUser.photoURL ?? "",
               })
                 .then(() => {
                   return {
