@@ -64,6 +64,7 @@ const WallpaperPopover = (props: Props) => {
           email: props.user.email,
           name: props.user.name,
           uid: props.user.uid,
+          userImg: props.user.userImg,
           recentBoard: {
             backgroundUrl: wallpapers[idx].urls.full,
             boardId: props.user.recentBoard.boardId,

@@ -2,6 +2,7 @@ export interface User {
   name: string;
   uid: string;
   email: string;
+  userImg: string;
   recentBoard?: Board;
 }
 
@@ -24,6 +25,7 @@ export interface Template {
   id: string;
   uid: string;
   userName: string;
+  userImg: string;
   imgUrl: string;
   description: string;
   likes: number;
