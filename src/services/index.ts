@@ -263,6 +263,8 @@ class FirebaseAuthService {
         name: boardName,
         createdAt,
         lastUpdatedAt,
+        backgroundUrl:
+          "https://images.unsplash.com/photo-1499984290398-e50238823f66?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjE2MTE4OX0",
       })
       .then(async (data) =>
         data
@@ -413,6 +415,42 @@ class FirebaseAuthService {
           },
         });
         return null;
+      });
+  };
+
+  deleteBoard = async (userId: string, boardId: string): Promise<void> => {
+    return this.firestore
+      .doc(`users/${userId}/boards/${boardId}`)
+      .delete()
+      .then(() => {
+        store.addNotification({
+          title: "Success",
+          message: "Board Deleted successfully",
+          type: "success",
+          insert: "top",
+          animationIn: ["animated", "fadeIn"],
+          animationOut: ["animated", "fadeOut"],
+          container: "top-right",
+          dismiss: {
+            duration: 5000,
+            click: false,
+          },
+        });
+      })
+      .catch((e) => {
+        store.addNotification({
+          title: "Some error occurred",
+          message: e.message,
+          type: "danger",
+          insert: "top",
+          animationIn: ["animated", "fadeIn"],
+          animationOut: ["animated", "fadeOut"],
+          container: "top-right",
+          dismiss: {
+            duration: 5000,
+            click: false,
+          },
+        });
       });
   };
 

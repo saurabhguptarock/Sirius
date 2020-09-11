@@ -44,6 +44,7 @@ const Board = (props: Props) => {
       });
   };
 
+  // TODO :Update background url fetch url
   useEffect(() => {
     if (!props.user) {
       router.push("/login");
